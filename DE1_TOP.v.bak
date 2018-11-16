@@ -1,0 +1,1462 @@
+module DE1_TOP
+(
+	////////////////////////	Clock Input	 	////////////////////////
+	input	[1:0]	CLOCK_24,				//	24 MHz
+	input	[1:0]	CLOCK_27,				//	27 MHz
+	input			CLOCK_50,				//	50 MHz
+	input			EXT_CLOCK,				//	External Clock
+	////////////////////////	Push Button		////////////////////////
+	input	[3:0]	KEY,						//	Pushbutton[3:0]
+	////////////////////////	DPDT Switch		////////////////////////
+	input	[9:0]	SW,						//	Toggle Switch[9:0]
+	////////////////////////	7-SEG Display	////////////////////////
+	output	[6:0]	HEX0,					//	Seven Segment Digit 0
+	output	[6:0]	HEX1,					//	Seven Segment Digit 1
+	output	[6:0]	HEX2,					//	Seven Segment Digit 2
+	output	[6:0]	HEX3,					//	Seven Segment Digit 3
+	////////////////////////////	LED		////////////////////////////
+	output	[7:0]	LEDG,					//	LED Green[7:0]
+	output	[9:0]	LEDR,					//	LED Red[9:0]
+	////////////////////////////	UART	////////////////////////////
+	output			UART_TXD,			//	UART Transmitter
+	input			UART_RXD,				//	UART Receiver
+	///////////////////////		SDRAM Interface	////////////////////////
+	inout	 [15:0]	DRAM_DQ,				//	SDRAM Data bus 16 Bits
+	output [11:0]	DRAM_ADDR,			//	SDRAM Address bus 12 Bits
+	output			DRAM_LDQM,			//	SDRAM Low-byte Data Mask 
+	output			DRAM_UDQM,			//	SDRAM High-byte Data Mask
+	output			DRAM_WE_N,			//	SDRAM Write Enable
+	output			DRAM_CAS_N,			//	SDRAM Column Address Strobe
+	output			DRAM_RAS_N,			//	SDRAM Row Address Strobe
+	output			DRAM_CS_N,			//	SDRAM Chip Select
+	output			DRAM_BA_0,			//	SDRAM Bank Address 0
+	output			DRAM_BA_1,			//	SDRAM Bank Address 0
+	output			DRAM_CLK,			//	SDRAM Clock
+	output			DRAM_CKE,			//	SDRAM Clock Enable
+	////////////////////////	Flash Interface	////////////////////////
+	inout	 [7:0]	FL_DQ,				//	FLASH Data bus 8 Bits
+	output [21:0]	FL_ADDR,				//	FLASH Address bus 22 Bits
+	output			FL_WE_N,				//	FLASH Write Enable
+	output			FL_RST_N,			//	FLASH Reset
+	output			FL_OE_N,				//	FLASH Output Enable
+	output			FL_CE_N,				//	FLASH Chip Enable
+	////////////////////////	SRAM Interface	////////////////////////
+	inout	 [15:0]	SRAM_DQ,				//	SRAM Data bus 16 Bits
+	output [17:0]	SRAM_ADDR,			//	SRAM Address bus 18 Bits
+	output			SRAM_UB_N,			//	SRAM High-byte Data Mask 
+	output			SRAM_LB_N,			//	SRAM Low-byte Data Mask 
+	output			SRAM_WE_N,			//	SRAM Write Enable
+	output			SRAM_CE_N,			//	SRAM Chip Enable
+	output			SRAM_OE_N,			//	SRAM Output Enable
+	////////////////////	SD Card Interface	////////////////////////
+	inout				SD_DAT,				//	SD Card Data
+	inout				SD_DAT3,				//	SD Card Data 3
+	inout				SD_CMD,				//	SD Card Command Signal
+	output			SD_CLK,				//	SD Card Clock
+	////////////////////////	I2C		////////////////////////////////
+	inout				I2C_SDAT,			//	I2C Data
+	output			I2C_SCLK,			//	I2C Clock
+	////////////////////////	PS2		////////////////////////////////
+	input		 		PS2_DAT,				//	PS2 Data
+	input				PS2_CLK,				//	PS2 Clock
+	////////////////////	USB JTAG link	////////////////////////////
+	input  			TDI,					// CPLD -> FPGA (data in)
+	input  			TCK,					// CPLD -> FPGA (clk)
+	input  			TCS,					// CPLD -> FPGA (CS)
+	output 			TDO,					// FPGA -> CPLD (data out)
+	////////////////////////	VGA			////////////////////////////
+	output			VGA_HS,				//	VGA H_SYNC
+	output			VGA_VS,				//	VGA V_SYNC
+	output	[3:0]	VGA_R,   			//	VGA Red[3:0]
+	output	[3:0]	VGA_G,	 			//	VGA Green[3:0]
+	output	[3:0]	VGA_B,   			//	VGA Blue[3:0]
+	////////////////////	Audio CODEC		////////////////////////////
+	inout				AUD_ADCLRCK,		//	Audio CODEC ADC LR Clock
+	input				AUD_ADCDAT,			//	Audio CODEC ADC Data
+	inout				AUD_DACLRCK,		//	Audio CODEC DAC LR Clock
+	output			AUD_DACDAT,			//	Audio CODEC DAC Data
+	inout				AUD_BCLK,			//	Audio CODEC Bit-Stream Clock
+	output			AUD_XCK,				//	Audio CODEC Chip Clock
+	////////////////////////	GPIO	////////////////////////////////
+	inout	[35:0]	GPIO_0,				//	GPIO Connection 0
+	inout	[35:0]	GPIO_1				//	GPIO Connection 1
+);
+
+/*
+r4300_interface r4300_interface_inst
+(
+	.RESET_N( KEY[0] ) ,			// input  RESET_N
+	.SYS_CLK( CLK_DIV[0] ) ,	// input  SYS_CLK
+	
+	.COLDRESET_N( GPIO_1[3] ) ,// output  COLDRESET_N
+
+	.MCLOCK( GPIO_0[16] ) ,		// output  MCLOCK
+
+	.SYSAD( {GPIO_1[20],GPIO_1[19],GPIO_1[15],GPIO_1[14],GPIO_1[13],GPIO_1[10],GPIO_1[9],GPIO_0[1],
+				GPIO_0[10],GPIO_0[3], GPIO_0[4], GPIO_0[5], GPIO_0[6], GPIO_0[7], GPIO_0[8],GPIO_0[9],
+				GPIO_0[12],GPIO_0[11],GPIO_0[21],GPIO_0[13],GPIO_0[19],GPIO_0[15],GPIO_1[30],GPIO_1[29],
+				GPIO_1[28],GPIO_1[27],GPIO_1[26],GPIO_1[25],GPIO_1[24],GPIO_1[23],GPIO_1[22],GPIO_1[21]} ) ,		// inout [31:0] SYSAD
+
+	.SYSCMD( {GPIO_1[1],GPIO_1[4],GPIO_1[5],GPIO_1[7],GPIO_1[8]} ) ,	// inout [4:0] SYSCMD
+	
+	.PVALID_N( GPIO_1[2] ) ,	// input  PVALID_N
+	.EVALID_N( GPIO_1[18] ) ,	// output  EVALID_N
+	.EOK_N( GPIO_1[16] ) ,		// output  EOK_N
+	
+	.NMI_N( GPIO_1[11] ) ,		// output  NMI_N
+	.INT0_N( GPIO_0[17] ) ,		// output  INT0_N
+	.INT1_N( GPIO_1[32] ) ,		// output  INT1_N
+	.INT2_N( GPIO_1[12] ) ,		// output  INT2_N
+	.INT3_N( GPIO_0[14] ) ,		// output  INT3_N
+	.INT4_N( GPIO_0[20] ) ,		// output  INT4_N
+	
+	.R4300_DATA_IN( R4300_DATA_IN ) ,			// input [31:0] R4300_DATA_IN
+	.R4300_DATA_OUT( R4300_DATA_OUT ) ,			// output [31:0] R4300_DATA_OUT
+	
+	.R4300_ADDR_OUT( R4300_ADDR_OUT ) ,			// output [31:0] R4300_ADDR_OUT
+	
+	.R4300_BURST_COUNT( R4300_BURST_COUNT ) ,	// output [3:0] R4300_BURST_COUNT
+	
+	.R4300_READ_REQ( R4300_READ_REQ ) ,			// output  R4300_READ_REQ
+	.R4300_WRITE_REQ( R4300_WRITE_REQ ) ,		// output  R4300_WRITE_REQ
+	
+	.R4300_READDATA_VALID( 1'b1 ) ,	// input  R4300_READDATA_VALID
+	.R4300_WRITE_ACK( 1'b1 ) 			// input  R4300_WRITE_ACK
+);
+*/
+
+wire [31:0] R4300_DATA_IN = 32'h3C09_3400/*synthesis keep*/;
+//wire [31:0] R4300_DATA_IN = 32'hAC28_0010/*synthesis keep*/;
+
+wire [31:0] R4300_DATA_OUT/*synthesis keep*/;
+wire [31:0] R4300_ADDR_OUT/*synthesis keep*/;
+wire [3:0] R4300_BURST_COUNT/*synthesis keep*/;
+wire R4300_READ_REQ/*synthesis keep*/;
+wire R4300_WRITE_REQ/*synthesis keep*/;
+wire R4300_READDATA_VALID/*synthesis keep*/;
+wire R4300_WRITE_DONE/*synthesis keep*/;
+
+
+reg [31:0] FL_DATA_TEMP;
+reg [31:0] SRAM_DATA_MUX;
+
+reg [31:0] BYTE_ADDR/*synthesis noprune*/;
+reg [31:0] BYTE_ADDR_BACKUP;
+
+reg [31:0] WRITE_DATA_BACKUP/*synthesis noprune*/;
+
+reg [2:0] BURST_COUNT/*synthesis noprune*/;
+reg [2:0] BURST_COUNT_BACKUP/*synthesis noprune*/;
+reg [3:0] BYTE_ENA_BACKUP/*synthesis noprune*/;
+
+reg [7:0] BYTE_BUFFER [0:15];
+reg [3:0] BYTE_COUNT/*synthesis noprune*/;
+
+
+reg [5:0] state;
+always @(posedge SYS_CLK or negedge KEY[0])
+if (!KEY[0]) begin
+	state <= 0;
+	avm_waitrequest <= 1'b1;
+	avm_readdatavalid <= 1'b0;
+	BYTE_ADDR <= 0;
+	BYTE_COUNT <= 0;
+end
+else begin
+	
+	case (state)
+		0: begin
+			avm_readdatavalid <= 1'b0;
+			avm_waitrequest <= 1'b0;		// Ready to respond to a READ / WRITE command...
+
+			if (avm_read | avm_write) begin
+				BYTE_COUNT <= 0;
+				BYTE_ADDR <= avm_address;
+				BYTE_ADDR_BACKUP <= avm_address;
+				BURST_COUNT <= avm_burstcount;			// <- This BURST_COUNT gets decremented below, so...
+				BURST_COUNT_BACKUP <= avm_burstcount;	// We need a backup as well, as CPU core sometimes issues another READ while we're processing another.
+				BYTE_ENA_BACKUP <= avm_byteenable;
+				WRITE_DATA_BACKUP <= avm_writedata;
+				
+				avm_waitrequest <= 1'b1;	// Assert as soon as "avm_read" goes High, to say we're busy!
+				
+				if (avm_read) state <= 4;
+				if (avm_write) state <= 16;
+			end
+		end
+		
+		// READS...
+		4: begin
+			BYTE_BUFFER[BYTE_COUNT] <= DATA_READ_MUX[7:0];
+			
+			BYTE_COUNT <= BYTE_COUNT + 1;
+			BYTE_ADDR <= BYTE_ADDR + 1;
+			state <= state + 1;
+		end
+		5: begin
+			BYTE_BUFFER[BYTE_COUNT] <= DATA_READ_MUX[15:8];
+			
+			BYTE_COUNT <= BYTE_COUNT + 1;
+			BYTE_ADDR <= BYTE_ADDR + 1;
+			state <= state + 1;
+		end
+		6: begin
+			BYTE_BUFFER[BYTE_COUNT] <= DATA_READ_MUX[23:16];
+			
+			BYTE_COUNT <= BYTE_COUNT + 1;
+			BYTE_ADDR <= BYTE_ADDR + 1;
+			state <= state + 1;
+		end
+		7: begin
+			BYTE_BUFFER[BYTE_COUNT] <= DATA_READ_MUX[31:24];
+			
+			BYTE_COUNT <= BYTE_COUNT + 1;
+			BYTE_ADDR <= BYTE_ADDR + 1;
+			
+			if (BURST_COUNT==1) begin		// Check if done, then let the aoR3000 core read the WORDS...
+				avm_readdatavalid <= 1'b1;
+				BURST_COUNT <= BURST_COUNT_BACKUP;
+				BYTE_COUNT <= 0;
+				state <= state + 1;
+			end
+			else begin							// Else, more WORDs left to fetch...
+				//BYTE_ADDR <= BYTE_ADDR + 4;
+				BURST_COUNT <= BURST_COUNT - 1;
+				state <= 4;						// Fetch four more BYTES!
+			end
+		end
+		8: begin
+			if (BURST_COUNT==1) begin			// Let the aoR3000 read the WORDS...
+				avm_readdatavalid <= 1'b0;
+				avm_waitrequest <= 1'b0;
+				state <= 0;
+			end
+			BURST_COUNT <= BURST_COUNT - 1;	// ...(while decrementing BURST_COUNT.)
+			BYTE_COUNT <= BYTE_COUNT + 4;		// (and incrementing the BYTE count by 4.)
+		end
+		
+		
+		// WRITES...
+		16: begin
+			BYTE_COUNT <= BYTE_COUNT + 1;
+			state <= state + 1;
+		end
+		17: begin
+			BYTE_COUNT <= BYTE_COUNT + 1;
+			state <= state + 1;
+		end
+		18: begin
+			BYTE_COUNT <= BYTE_COUNT + 1;
+			state <= state + 1;
+		end
+		19: begin
+			BYTE_COUNT <= BYTE_COUNT + 1;
+			state <= state + 1;
+		end
+		20: begin
+			avm_waitrequest <= 1'b0;
+			BURST_COUNT <= BURST_COUNT - 1;
+			state <= 0;
+		end
+	endcase
+
+end
+
+aoR3000 aoR3000_inst
+(
+	.clk( SYS_CLK ) ,				// input  clk
+	.rst_n( !SDRAM_INIT ) ,		// input  rst_n
+	
+	.interrupt_vector( interrupt_vector ) ,// input [5:0] interrupt_vector
+	
+	.avm_address( avm_address ) ,				// output [31:0] avm_address
+	
+	.avm_writedata( avm_writedata ) ,		// output [31:0] avm_writedata
+	
+	.avm_byteenable( avm_byteenable ) ,		// output [3:0] avm_byteenable
+
+	.avm_burstcount( avm_burstcount ) ,		// output [2:0] avm_burstcount
+	
+	.avm_write( avm_write ) ,					// output  avm_write
+	.avm_read( avm_read ) ,						// output  avm_read
+	
+	.avm_waitrequest( avm_waitrequest ) ,	// input  avm_waitrequest
+	
+	.avm_readdata( avm_readdata ) , 			// input [31:0] avm_readdata
+	.avm_readdatavalid( avm_readdatavalid ) ,	// input  avm_readdatavalid
+	
+	.mem_result_index( mem_result_index ) ,// output [4:0] mem_result_index
+	.mem_result( mem_result ) ,				// output [31:0] mem_result
+	
+	.if_pc( if_pc ) ,								// output [31:0] if_pc
+	
+	.rf_cmd( rf_cmd ) ,							// output [6:0] rf_cmd
+	
+	.force_mem_stall( force_mem_stall | DMA2_ACTIVE ),		// input force_mem_stall
+	
+	.inhibit_isolate_cache( inhibit_isolate_cache ),
+	
+	.data_out( data_out )
+);
+
+wire inhibit_isolate_cache = (avm_address[28:24]==5'h1F);
+
+
+//wire [31:0] data_address;
+wire [31:0] data_out;
+//wire exe_cmd_store;
+//wire exe_cmd_load;
+
+
+/*
+scc scc_inst
+(
+	.clk(clk) ,	// input  clk
+	.cep(cep) ,	// input  cep
+	.cen(cen) ,	// input  cen
+	.reset_hw(reset_hw) ,	// input  reset_hw
+	.cs(cs) ,	// input  cs
+	.we(we) ,	// input  we
+	.rs(rs) ,	// input [1:0] rs
+	.wdata(wdata) ,	// input [7:0] wdata
+	.rdata(rdata) ,	// output [7:0] rdata
+	._irq(_irq) ,	// output  _irq
+	.rxd(rxd) ,	// input  rxd
+	.txd(txd) ,	// output  txd
+	.cts(cts) ,	// input  cts
+	.rts(rts) ,	// output  rts
+	.dcd_a(dcd_a) ,	// input  dcd_a
+	.dcd_b(dcd_b) ,	// input  dcd_b
+	.wreq(wreq) 	// output  wreq
+);
+*/
+
+async_transmitter async_transmitter_inst
+(
+	.clk( SYS_CLK ) ,			// input  clk
+	.TxD_start( PUTCHAR ) ,	// input  TxD_start
+	.TxD_data( A0[7:0] ) ,	// input [7:0] TxD_data
+	.TxD( UART_TXD ) ,		// output  TxD
+	.TxD_busy( TXD_BUSY ) 	// output  TxD_busy
+);
+wire TXD_BUSY;
+
+
+reg force_mem_stall;
+reg [7:0] debug_state;
+reg [7:0] run_count;
+reg [31:0] pc_backup;
+always @(posedge SYS_CLK or negedge KEY[0])
+if (!KEY[0]) begin
+	debug_state <= 0;
+	pc_backup <= 32'h12345678;
+	force_mem_stall <= 1'b1;
+end
+else begin
+
+	case (debug_state)
+	
+	0: begin
+		if (SW[0]) begin
+			force_mem_stall <= 1'b0;			// RUN switch HIGH (active). Let CPU run.
+			
+			if (SW[9] && BP_MATCHED) begin	// Nice breakpoint (using the OSD, and PS/2 keyboard).
+				force_mem_stall <= 1'b1;
+				debug_state <= 7;
+			end
+			else begin
+				if (SW[8]) debug_state <= 8;
+//				if (TXD_BUSY) force_mem_stall <= 1'b1;
+//				else force_mem_stall <= 1'b0;
+			end
+		end
+		else begin									// RUN switch LOW (inactive!)...
+			force_mem_stall <= 1'b1;
+			if (!KEY[3]) begin
+				debug_state <= 1;	// KEY[3] pressed (active-low)...
+			end
+			if (!KEY[2]) begin
+				run_count <= 8'd64;
+				debug_state <= 4;	// KEY[2] pressed (active-low)...
+			end
+		end		
+	end
+	
+	8: begin
+		force_mem_stall <= 1'b1;
+		debug_state <= 0;
+	end
+	
+	// Single-cycle...
+	1: begin
+		pc_backup <= if_pc;
+		force_mem_stall <= 1'b0;
+		debug_state <= debug_state + 1;
+	end
+
+	2: if (if_pc != pc_backup) begin		// Let CPU run, until Program Counter changes...
+		force_mem_stall <= 1'b1;
+		debug_state <= debug_state + 1;
+	end
+	
+	3: begin
+		if (KEY[3]) debug_state <= 0;		// Wait until KEY[3] goes HIGH (not pressed) again.
+	end
+
+	
+	// Multiple cycles...
+	4: begin
+		pc_backup <= if_pc;
+		force_mem_stall <= 1'b0;
+		debug_state <= debug_state + 1;
+	end
+
+	5: if (if_pc != pc_backup) begin		// Let CPU run, until Program Counter changes...
+		force_mem_stall <= 1'b1;
+		debug_state <= debug_state + 1;
+	end
+	
+	6: begin
+		if (run_count>0) begin
+			run_count <= run_count - 1;
+			debug_state <= 4;
+		end
+		else begin
+			if (KEY[2] & !SW[0]) debug_state <= 0;	// Wait for KEY[2] to go HIGH (not pressed), and the RUN switch to go LOW, so we can stop after the breakpoint!
+		end
+	end
+
+	
+	// Wait for RUN switch LOW, so we can stop after a breakpoint!
+	7: begin
+		if (!SW[0]) debug_state <= 0;
+	end
+	
+	default:;
+	
+	endcase
+end
+
+
+
+wire [4:0] mem_result_index;
+wire [31:0] mem_result;
+
+wire [31:0] if_pc;
+
+
+wire [31:0] avm_address/*synthesis keep*/;
+wire [31:0] avm_writedata/*synthesis keep*/;
+
+wire [3:0] avm_byteenable;
+
+wire [2:0] avm_burstcount;
+
+reg avm_waitrequest = 1'b1;
+reg avm_readdatavalid = 1'b0;
+
+
+// This should be the correct endianess when using the byte-flipped version of IP224613.BIN (so the strings read correctly in a Hex editor)...
+wire [31:0] data_flipped = (BYTE_COUNT[3:2]==0) ? {BYTE_BUFFER[3],BYTE_BUFFER[2],BYTE_BUFFER[1],BYTE_BUFFER[0]} :
+									(BYTE_COUNT[3:2]==1) ? {BYTE_BUFFER[7],BYTE_BUFFER[6],BYTE_BUFFER[5],BYTE_BUFFER[4]} :
+									(BYTE_COUNT[3:2]==2) ? {BYTE_BUFFER[11],BYTE_BUFFER[10],BYTE_BUFFER[9],BYTE_BUFFER[8]} :
+																  {BYTE_BUFFER[15],BYTE_BUFFER[14],BYTE_BUFFER[13],BYTE_BUFFER[12]};
+																  
+
+//wire [31:0] data_normal  = (BYTE_COUNT[3:2]==0) ? {BYTE_BUFFER[0],BYTE_BUFFER[1],BYTE_BUFFER[2],BYTE_BUFFER[3]} :
+//									(BYTE_COUNT[3:2]==1) ? {BYTE_BUFFER[4],BYTE_BUFFER[5],BYTE_BUFFER[6],BYTE_BUFFER[7]} :
+//									(BYTE_COUNT[3:2]==2) ? {BYTE_BUFFER[8],BYTE_BUFFER[9],BYTE_BUFFER[10],BYTE_BUFFER[11]} :
+//																  {BYTE_BUFFER[12],BYTE_BUFFER[13],BYTE_BUFFER[14],BYTE_BUFFER[15]};
+
+
+// Attempt to wordswap some strings in the BIOS ROM (for serial output), but it screws up other stuff, since BYTE_ADDR doesn't get updated at the correct times for instruction fetches.
+//wire [31:0] avm_readdata/*synthesis noprune*/ = (BYTE_ADDR>=32'h1FC0_3D50 && BYTE_ADDR<=32'h1FC0_3DEF) ? data_normal : data_flipped;
+
+wire [31:0] avm_readdata/*synthesis noprune*/ = data_flipped;
+
+
+wire BANK1_CS		= (BYTE_ADDR >= 32'h0000_0000 && BYTE_ADDR <= 32'h0007_FFFF)/*synthesis keep*/;	// Mirror of first 512KB of main RAM.
+wire MAINRAM_CS	= (BYTE_ADDR >= 32'h0800_0000 && BYTE_ADDR <= 32'h0FFF_FFFF)/*synthesis keep*/;	// 128MB of main RAM.
+wire NEWPORT_CS	= (BYTE_ADDR >= 32'h1F0F_0000 && BYTE_ADDR <= 32'h1F0F_1FFF)/*synthesis keep*/;	// Indy GFX card. (with REX3 rasteriser / span / line drawing etc.)
+wire MC_CS			= (BYTE_ADDR >= 32'h1FA0_0000 && BYTE_ADDR <= 32'h1FA1_FFFF)/*synthesis keep*/;
+wire PBUSDMA_CS	= (BYTE_ADDR >= 32'h1FB8_0000 && BYTE_ADDR <= 32'h1FB8_FFFF)/*synthesis keep*/;
+wire HD_ENET_CS	= (BYTE_ADDR >= 32'h1FB9_0000 && BYTE_ADDR <= 32'h1FB9_FFFF)/*synthesis keep*/;
+wire SCRATCH_CS	= (BYTE_ADDR >= 32'h1FBB_0000 && BYTE_ADDR <= 32'h1FBB_0003)/*synthesis keep*/;
+wire HD0_CS			= (BYTE_ADDR >= 32'h1FBC_0000 && BYTE_ADDR <= 32'h1FBC_7FFF)/*synthesis keep*/;
+wire UNKBUS0_CS	= (BYTE_ADDR >= 32'h1FBC_8000 && BYTE_ADDR <= 32'h1FBC_FFFF)/*synthesis keep*/;
+wire HAL2_CS		= (BYTE_ADDR >= 32'h1FBD_8000 && BYTE_ADDR <= 32'h1FBD_83FF)/*synthesis keep*/;
+wire HACK_CS		= (BYTE_ADDR >= 32'h1FBD_8400 && BYTE_ADDR <= 32'h1FBD_87FF)/*synthesis keep*/;
+wire PBUS4_CS		= (BYTE_ADDR >= 32'h1FBD_9000 && BYTE_ADDR <= 32'h1FBD_93FF)/*synthesis keep*/;
+wire IOC_CS			= (BYTE_ADDR >= 32'h1FBD_9800 && BYTE_ADDR <= 32'h1FBD_9BFF)/*synthesis keep*/;
+wire SMALLRAM_CS	= (BYTE_ADDR >= 32'h1FBD_C000 && BYTE_ADDR <= 32'h1FBD_D3FF)/*synthesis keep*/;	// Defined as two small blocks in MAME source? (indy_indigo2.cpp).
+wire DS1386_CS		= (BYTE_ADDR >= 32'h1FBE_0000 && BYTE_ADDR <= 32'h1FBE_04FF)/*synthesis keep*/;
+wire BIOS_CS		= (BYTE_ADDR >= 32'h1FC0_0000 && BYTE_ADDR <= 32'h1FC7_FFFF)/*synthesis keep*/;	// 512KBytes for BIOS ROM.
+wire MAINRAM2_CS	= (BYTE_ADDR >= 32'h2000_0000 && BYTE_ADDR <= 32'h2FFF_FFFF)/*synthesis keep*/;	// 128MB of extra RAM. Can only be accessed via Virtual Memory, apparently.
+
+
+/*
+assign GPIO_0[0]  =  BANK1_CS;
+assign GPIO_0[1]  =  MAINRAM_CS;
+assign GPIO_0[2]  =  NEWPORT_CS;
+assign GPIO_0[3]  =  MC_CS;
+assign GPIO_0[4]  =  HD_ENET_CS;
+assign GPIO_0[5]  =  SCRATCH_CS;
+assign GPIO_0[6]  =  HD0_CS;
+assign GPIO_0[7]  =  UNKBUS0_CS;
+assign GPIO_0[8]  =  PBUSDMA_CS;
+assign GPIO_0[9]  =  HAL2_CS;
+assign GPIO_0[10] =  HACK_CS;
+assign GPIO_0[11] =  PBUS4_CS;
+assign GPIO_0[12] =  IOC_CS;
+assign GPIO_0[13] =  SMALLRAM_CS;
+assign GPIO_0[14] =  DS1386_CS;
+assign GPIO_0[15] =  BIOS_CS;
+assign GPIO_0[16] =  MAINRAM2_CS;
+*/
+
+
+wire [31:0] HAL2_FUDGE = (BYTE_ADDR[15:0] >= 16'h0010 && BYTE_ADDR[15:0] <= 16'h001f) ? 32'h00000004 :
+								 (BYTE_ADDR[15:0] >= 16'h0020 && BYTE_ADDR[15:0] <= 16'h002f) ? 32'h00004011 : 32'hFFFFFFFF;
+
+
+wire [31:0] NEWPORT_FUDGE = 32'hFFFFFFFF;
+
+wire SYSID_CS = (BYTE_ADDR >= 32'h1FBD_9858 && BYTE_ADDR <= 32'h1FBD_9B5B);
+
+
+wire [31:0] DATA_READ_MUX = (BANK1_CS | MAINRAM_CS | MAINRAM2_CS)	? {SDRAM_DOUT, SDRAM_DOUT} : 
+									 
+									 (NEWPORT_CS)	? NEWPORT_FUDGE :
+									 (HAL2_CS)		? HAL2_FUDGE :
+									 
+									 //(IOC_CS) 		? IOC_FUDGE :
+									 
+									 (SCC_CS) 		? SCC_REG :
+									 
+									 (GENCON_CS) 	? GENCON_REG :
+									 
+									 (DALLAS_REG_FB_CS)	? DALLAS_REG_FB :
+									 (DALLAS_REG_FF_CS)	? DALLAS_REG_FF :
+									 
+									 (PBUS4_0_CS)	? PBUS4_REG0 :
+									 (PBUS4_1_CS)	? PBUS4_REG1 :
+									 (PBUS4_2_CS)	? PBUS4_REG2 :
+									 (PBUS4_3_CS)	? PBUS4_REG3 :
+									 (PBUS4_4_CS)	? PBUS4_REG4 :
+									 (PBUS4_5_CS)	? PBUS4_REG5 :
+									 
+									 (HD0_REG0_CS) ? HD0_REG0 :
+									 (HD0_REG1_CS) ? HD0_REG1 :
+									 
+									 (INT3_L0_STAT_CS) ? INT3_L0_STAT_REG :
+									 (INT3_L0_MASK_CS) ? INT3_L0_MASK_REG :
+
+									 (INT3_L1_STAT_CS) ? INT3_L1_STAT_REG :
+									 (INT3_L1_MASK_CS) ? INT3_L1_MASK_REG :
+									 
+									 (INT3_MAP_STAT_CS) ? INT3_MAP_STAT_REG :
+									 (INT3_MAP_MASK0_CS) ? INT3_MAP_MASK0_REG :
+									 (INT3_MAP_MASK1_CS) ? INT3_MAP_MASK1_REG :
+									 
+									 //(SYSID_CS)		? 32'h00000020 :	// Indy System ID? Rev 0 MC?
+									 (SYSID_CS)		? 32'h00000021 :	// Indy System ID? Rev 1 MC?
+									 //(SYSID_CS)		? 32'h00000011 :	// Indigo System ID?
+									 
+									 (MC_CS)			? MC_DATA_OUT :
+									 (HD_ENET_CS)	? HD_ENET_DATA_OUT :
+									 //(SCRATCH_CS)	? SCRATCH_DOUT :
+									 
+									 RESET_REG_CS 	? {24'h000000, 2'b00, RESET_REG} :
+									 
+									 //(BYTE_ADDR>=32'h1FC0_0560 && BYTE_ADDR<=32'h1FC0_0563) ? 32'h00000000 :	// NOP the call to the SDRAM test routine, I think. OzOnE.
+									 
+									 (BYTE_ADDR>=32'h1FB8_0D13 && BYTE_ADDR<=32'h1FB8_0D17) ? 32'hFFFFFFFF :	// ****** FUDGE for Indigo only - spoofs that the serial port is ready ******
+									 
+									 //(BYTE_ADDR>=32'h1FC0_12A8 && BYTE_ADDR<=32'h1FC0_12B3) ? 32'h00000000 :	// NOP "cache" instructions, as they cause an exception on the aoR3000 atm.
+									 
+									 //(BYTE_ADDR>=32'h1FC0_3BF4 && BYTE_ADDR<=32'h1FC0_3BF8) ? 32'h00000000 :	// NOP the call to the serial routine, I think. OzOnE.
+									 
+									 //(BYTE_ADDR>=32'h1FC0_4080 && BYTE_ADDR<=32'h1FC0_4083) ? 32'h00000000 :	// NOP the endless loop after a self-test fail. (won't reach DRAM test without this).
+									 
+									 //(BYTE_ADDR>=32'h1FC0_3C20 && BYTE_ADDR<=32'h1FC0_3C23) ? 32'h03E00008 :	// jr $ra.
+									 
+									 (BIOS_CS)		? {FL_DQ, FL_DQ, FL_DQ, FL_DQ} : 32'h00000000;
+
+
+// For READs...
+wire SCC_CS    = (BYTE_ADDR >= 32'h1FBD_9830 && BYTE_ADDR <= 32'h1FBD_9833);
+wire GENCON_CS = (BYTE_ADDR >= 32'h1FBD_984C && BYTE_ADDR <= 32'h1FBD_984F);
+
+wire PBUS4_0_CS = (BYTE_ADDR >= 32'h1FBD_9000 && BYTE_ADDR <= 32'h1FBD_9003);
+wire PBUS4_1_CS = (BYTE_ADDR >= 32'h1FBD_9004 && BYTE_ADDR <= 32'h1FBD_9007);
+wire PBUS4_2_CS = (BYTE_ADDR >= 32'h1FBD_9008 && BYTE_ADDR <= 32'h1FBD_900B);
+wire PBUS4_3_CS = (BYTE_ADDR >= 32'h1FBD_900C && BYTE_ADDR <= 32'h1FBD_900F);
+wire PBUS4_4_CS = (BYTE_ADDR >= 32'h1FBD_9010 && BYTE_ADDR <= 32'h1FBD_9013);
+wire PBUS4_5_CS = (BYTE_ADDR >= 32'h1FBD_9014 && BYTE_ADDR <= 32'h1FBD_9017);
+
+wire RESET_REG_CS = (BYTE_ADDR >= 32'h1FBD_9870 && BYTE_ADDR <= 32'h1FBD_9873);
+
+wire HD0_REG0_CS = (BYTE_ADDR >= 32'h1FBC_0000 && BYTE_ADDR <= 32'h1FBC_0003) ||
+						 (BYTE_ADDR >= 32'h1FBC_4000 && BYTE_ADDR <= 32'h1FBC_4003);	// WD33 SCSI HD0 Status Read.
+
+wire HD0_REG1_CS = (BYTE_ADDR >= 32'h1FBC_0004 && BYTE_ADDR <= 32'h1FBC_0007) ||
+						 (BYTE_ADDR >= 32'h1FBC_4004 && BYTE_ADDR <= 32'h1FBC_4007);	// WD33 SCSI HD0 Register Read.
+
+wire DALLAS_REG_FB_CS = (BYTE_ADDR >= 32'h1FBE_00F8 && BYTE_ADDR <= 32'h1FBE_00FB);	// Kludge, so it passes the self-test.
+wire DALLAS_REG_FF_CS = (BYTE_ADDR >= 32'h1FBE_00FC && BYTE_ADDR <= 32'h1FBE_00FF);	// Kludge, so it passes the self-test.
+
+
+wire INT3_L0_STAT_CS = (BYTE_ADDR >= 32'h1FBD_9880 && BYTE_ADDR <= 32'h1FBD_9883);
+wire INT3_L0_MASK_CS = (BYTE_ADDR >= 32'h1FBD_9884 && BYTE_ADDR <= 32'h1FBD_9887);
+
+wire INT3_L1_STAT_CS = (BYTE_ADDR >= 32'h1FBD_9888 && BYTE_ADDR <= 32'h1FBD_988B);
+wire INT3_L1_MASK_CS = (BYTE_ADDR >= 32'h1FBD_988C && BYTE_ADDR <= 32'h1FBD_988F);
+
+wire INT3_MAP_STAT_CS = (BYTE_ADDR >= 32'h1FBD_9890 && BYTE_ADDR <= 32'h1FBD_9893);
+wire INT3_MAP_MASK0_CS = (BYTE_ADDR >= 32'h1FBD_9894 && BYTE_ADDR <= 32'h1FBD_9897);
+wire INT3_MAP_MASK1_CS = (BYTE_ADDR >= 32'h1FBD_9898 && BYTE_ADDR <= 32'h1FBD_989B);
+
+assign LEDR[5:0] = RESET_REG;
+
+reg [31:0] SCC_REG;
+reg [31:0] GENCON_REG;
+
+reg [31:0] DALLAS_REG_FB;
+reg [31:0] DALLAS_REG_FF;
+
+reg [31:0] PBUS4_REG0;
+reg [31:0] PBUS4_REG1;
+reg [31:0] PBUS4_REG2;
+reg [31:0] PBUS4_REG3;
+reg [31:0] PBUS4_REG4;
+reg [31:0] PBUS4_REG5;
+
+reg [31:0] HD0_REG0;
+reg [31:0] HD0_REG1;
+
+reg [31:0] INT3_L0_STAT_REG;
+reg [31:0] INT3_L0_MASK_REG;
+
+reg [31:0] INT3_L1_STAT_REG;
+reg [31:0] INT3_L1_MASK_REG;
+
+reg [31:0] INT3_MAP_STAT_REG;
+reg [31:0] INT3_MAP_MASK0_REG;
+reg [31:0] INT3_MAP_MASK1_REG;
+
+
+reg [7:0] A0/*synthesis noprune*/;
+reg PUTCHAR/*synthesis noprune*/;
+
+
+reg [5:0] RESET_REG;
+always @(posedge SYS_CLK or negedge KEY[0])
+if (!KEY[0]) begin
+	SCC_REG <= 32'h00000000;
+	GENCON_REG <= 32'h00000000;
+	
+	DALLAS_REG_FB <= 32'h00000000;
+	DALLAS_REG_FF <= 32'h00000000;
+	
+	PBUS4_REG0 <= 32'h00000000;
+	PBUS4_REG1 <= 32'h00000000;
+	PBUS4_REG2 <= 32'h00000000;
+	PBUS4_REG3 <= 32'h00000000;
+	PBUS4_REG4 <= 32'h00000000;
+	PBUS4_REG5 <= 32'h00000000;
+	
+	INT3_L0_STAT_REG <= 32'h00000000;
+	INT3_L0_MASK_REG <= 32'h00000000;
+
+	INT3_L1_STAT_REG <= 32'h00000000;
+	INT3_L1_MASK_REG <= 32'h00000000;
+
+	INT3_MAP_STAT_REG <= 32'h00000000;
+	INT3_MAP_MASK0_REG <= 32'h00000000;
+	INT3_MAP_MASK1_REG <= 32'h00000000;
+	
+	RESET_REG <= 6'b001111;
+	
+	PUTCHAR <= 1'b0;
+end
+else begin
+	PUTCHAR <= 1'b0;
+	
+	// Looks like the Indigo BIOS also uses the $v1 to store the characters as they are output to the serial port.
+	// But obviously the routines are at different addresses depending on the exact BIOS...
+	if (if_pc[28:0]==29'h1FC0_2B50) PUTCHAR <= 1'b1;	// IP12 - Indigo BIOS.
+	//if (if_pc[28:0]==29'h1FC0_3CD0) PUTCHAR <= 1'b1;	// IP24 - Indy BIOS.
+		
+	if (mem_result_index!=0 && mem_result_index==5'd3) A0 <= mem_result[7:0];	// Capture writes to CPU reg "v1" (reg 3). Lower byte only.
+	
+/*
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_9833 && BYTE_ADDR <= 32'h1FBD_9836)) begin
+		A0 <= WRITE_DATA_BACKUP;
+		PUTCHAR <= 1'b1;
+	end
+*/
+	
+	if (state==18 && (BYTE_ADDR >= 32'h1FBC_0000 && BYTE_ADDR <= 32'h1FBC_0003)) HD0_REG0 <= WRITE_DATA_BACKUP;	// WD33 SCSI HD0 Status Read.
+	if (state==18 && (BYTE_ADDR >= 32'h1FBC_4000 && BYTE_ADDR <= 32'h1FBC_4003)) HD0_REG0 <= WRITE_DATA_BACKUP;
+	
+	if (state==18 && (BYTE_ADDR >= 32'h1FBC_0004 && BYTE_ADDR <= 32'h1FBC_0007)) HD0_REG1 <= WRITE_DATA_BACKUP;	// WD33 SCSI HD0 Register Read.
+	if (state==18 && (BYTE_ADDR >= 32'h1FBC_4004 && BYTE_ADDR <= 32'h1FBC_4007)) HD0_REG1 <= WRITE_DATA_BACKUP;
+	
+	if (state==18 && (BYTE_ADDR >= 32'h1FBE_00F8 && BYTE_ADDR <= 32'h1FBE_00FB)) DALLAS_REG_FB <= WRITE_DATA_BACKUP;
+	if (state==18 && (BYTE_ADDR >= 32'h1FBE_00FC && BYTE_ADDR <= 32'h1FBE_00FF)) DALLAS_REG_FF <= WRITE_DATA_BACKUP;
+
+	//if (state==18 && (BYTE_ADDR >= 32'h1FBD_9830 && BYTE_ADDR <= 32'h1FBD_9833)) SCC_REG <= WRITE_DATA_BACKUP;
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_984C && BYTE_ADDR <= 32'h1FBD_984F)) GENCON_REG <= WRITE_DATA_BACKUP;
+	
+	if (SCC_CS && state==4) begin
+		if (SCC_REG != 32'h00000004) SCC_REG <= 32'h44444444;
+		else SCC_REG <= 32'h00000000;
+	end
+
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_9000 && BYTE_ADDR <= 32'h1FBD_9003)) PBUS4_REG0 <= WRITE_DATA_BACKUP;
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_9004 && BYTE_ADDR <= 32'h1FBD_9007)) PBUS4_REG1 <= WRITE_DATA_BACKUP;
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_9008 && BYTE_ADDR <= 32'h1FBD_900B)) PBUS4_REG2 <= WRITE_DATA_BACKUP;
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_900C && BYTE_ADDR <= 32'h1FBD_900F)) PBUS4_REG3 <= WRITE_DATA_BACKUP;
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_9010 && BYTE_ADDR <= 32'h1FBD_9013)) PBUS4_REG4 <= WRITE_DATA_BACKUP;
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_9014 && BYTE_ADDR <= 32'h1FBD_9017)) PBUS4_REG5 <= WRITE_DATA_BACKUP;
+
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_9880 && BYTE_ADDR <= 32'h1FBD_9883)) INT3_L0_STAT_REG <= WRITE_DATA_BACKUP;
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_9884 && BYTE_ADDR <= 32'h1FBD_9887)) INT3_L0_MASK_REG <= WRITE_DATA_BACKUP;
+
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_9888 && BYTE_ADDR <= 32'h1FBD_988B)) INT3_L1_STAT_REG <= WRITE_DATA_BACKUP;
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_988C && BYTE_ADDR <= 32'h1FBD_988F)) INT3_L1_MASK_REG <= WRITE_DATA_BACKUP;
+
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_9890 && BYTE_ADDR <= 32'h1FBD_9893)) INT3_MAP_STAT_REG <= WRITE_DATA_BACKUP;
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_9894 && BYTE_ADDR <= 32'h1FBD_9897)) INT3_MAP_MASK0_REG <= WRITE_DATA_BACKUP;
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_9898 && BYTE_ADDR <= 32'h1FBD_989F)) INT3_MAP_MASK1_REG <= WRITE_DATA_BACKUP;
+	
+	
+	if (state==18 && (BYTE_ADDR >= 32'h1FBD_9870 && BYTE_ADDR <= 32'h1FBD_9873)) RESET_REG <= WRITE_DATA_BACKUP[5:0];
+end
+
+									 
+wire [31:0] MC_DATA_OUT;
+wire MC_WR = state==18 && (BYTE_ADDR >= 32'h1FA0_0000 && BYTE_ADDR <= 32'h1FA1_FFFF);
+
+wire MC_RD = READ_STATE && (BYTE_ADDR >= 32'h1FA0_0000 && BYTE_ADDR <= 32'h1FA1_FFFF);
+
+sgi_mc sgi_mc_inst
+(
+	.RESET_N( KEY[0] ) ,		// input  RESET_N
+	.SYS_CLK( SYS_CLK ) ,	// input  SYS_CLK
+	
+	.READ_ADDR_LOW( BYTE_ADDR[15:0] ) ,	// input [15:0] READ_ADDR_LOW
+	.MC_DATA_OUT( MC_DATA_OUT ) ,			// output [31:0] MC_DATA_OUT
+	.MC_RD( MC_RD ) ,
+	
+	.WRITE_ADDR_LOW( BYTE_ADDR[15:0] ) ,	// input [15:0] WRITE_ADDR_LOW
+	.MC_DATA_IN( WRITE_DATA_BACKUP ) ,	// input [31:0] MC_DATA_IN
+	.MC_WR( MC_WR ) 				// input  MC_WR
+	
+//	.EEROM_CS(EEROM_CS) ,	// output  EEROM_CS
+//	.EEROM_SCK(EEROM_SCK) ,	// output  EEROM_SCK
+//	.EEROM_SO(EEROM_SO) ,	// output  EEROM_SO
+//	.EEROM_SI(EEROM_SI) 	// input  EEROM_SI
+);
+
+
+wire [31:0] HD_ENET_DATA_OUT;
+wire HD_ENET_WR = state==18 && (BYTE_ADDR >= 32'h1FB9_0000 && BYTE_ADDR <= 32'h1FB9_FFFF);
+sgi_hd_enet sgi_hd_enet_inst
+(
+	.RESET_N( KEY[0] ) ,		// input  RESET_N
+	.SYS_CLK( SYS_CLK ) ,	// input  SYS_CLK
+	
+	.READ_ADDR_LOW( BYTE_ADDR[15:0] ) ,		// input [15:0] READ_ADDR_LOW
+	.HD_ENET_DATA_OUT( HD_ENET_DATA_OUT ) ,	// output [31:0] HD_ENET_DATA_OUT
+	
+	.WRITE_ADDR_LOW( BYTE_ADDR[15:0] ) ,	// input [15:0] WRITE_ADDR_LOW
+	.HD_ENET_DATA_IN( WRITE_DATA_BACKUP ) ,	// input [31:0] HD_ENET_DATA_IN
+	.HD_ENET_WR( HD_ENET_WR ) 			// input  HD_ENET_WR
+);
+
+
+
+wire D2_MADR_CS = (BYTE_ADDR >= 32'h1F80_10A0 && BYTE_ADDR <= 32'h1F80_10A3);	// DMA 2 (GPU) Base Address reg.
+wire D2_BCR_CS  = (BYTE_ADDR >= 32'h1F80_10A4 && BYTE_ADDR <= 32'h1F80_10A7);	// DMA 2 (GPU) Block Control Reg.
+wire D2_CHCR_CS = (BYTE_ADDR >= 32'h1F80_10A8 && BYTE_ADDR <= 32'h1F80_10AB);	// DMA 2 (GPU) Channel Control reg.
+
+
+// Global DMA regs...
+wire DPCR_CS = (BYTE_ADDR >= 32'h1F80_10F0 && BYTE_ADDR <= 32'h1F80_10F3);	// DMA Priority Control Reg.
+wire DICR_CS = (BYTE_ADDR >= 32'h1F80_10F4 && BYTE_ADDR <= 32'h1F80_10F7);	// Interrupt Control Reg.
+
+
+reg [23:0] D2_MADR_REG/*synthesis noprune*/;
+reg [31:0] D2_BCR_REG/*synthesis noprune*/;
+reg [31:0] D2_CHCR_REG/*synthesis noprune*/;
+
+// Global DMA regs...
+reg [31:0] DPCR_REG;	// DMA Priority Control Reg.
+reg [31:0] DICR_REG;	// Interrupt Control Reg.
+
+
+reg [31:0] BIU_REG/*synthesis noprune*/;
+reg [15:0] PSX_SEG;
+
+//reg [7:0] A0/*synthesis noprune*/;
+//reg PUTCHAR/*synthesis noprune*/;
+
+
+
+reg [10:0] INT_STAT/*synthesis noprune*/;
+
+reg [10:0] INT_MASK/*synthesis noprune*/;
+
+//reg MIPS_INT;
+//wire MIPS_INT = !KEY[1];	// TESTING - Using key (button) as an Interrupt (SGI testing). OzOnE.
+
+//wire [5:0] interrupt_vector = {2'b00, MIPS_INT, 2'b00, MIPS_INT};
+wire [5:0] interrupt_vector = 6'b000000;
+
+/*
+wire VBLANK = PATT_VS_N;
+reg VBLANK_1;
+
+wire VBLANK_INT_TRIG = (!VBLANK & VBLANK_1);	// IRQ0. Bodged V_BLANK Interrupt (for now). Check for FALLING edge of PATT_VS_N. OzOnE.
+wire GPU_INT_TRIG   = 1'b0;	// IRQ1. Can be requested via GP0(1Fh) command (rarely used)
+wire CDROM_INT_TRIG = 1'b0;	// IRQ2
+wire DMA_INT_TRIG   = 1'b0;	// IRQ3
+wire TMR0_INT_TRIG  = X_OUT[2];	// IRQ4. Timer 0 aka Root Counter 0 (Sysclk or Dotclk)
+wire TMR1_INT_TRIG  = PATT_HS_N;	// IRQ5. Timer 1 aka Root Counter 1 (Sysclk or H-blank)
+wire TMR2_INT_TRIG  = X_OUT[4];	// IRQ6. Timer 2 aka Root Counter 2 (Sysclk or Sysclk/8)
+wire PAD_INT_TRIG   = KEY[1];	// IRQ7. Controller and Memory Card - Byte Received Interrupt
+wire SIO_INT_TRIG   = 1'b0;	// IRQ8
+wire SPU_INT_TRIG   = 1'b0;	// IRQ9
+wire LIGHT_INT_TRIG = 1'b0;	// IRQ10. Controller - Lightpen Interrupt (reportedly also PIO...?)
+*/
+
+//reg DMA0_ACTIVE = 0;
+//reg DMA1_ACTIVE = 0;
+
+//reg DMA2_ACTIVE = 0;
+wire DMA2_ACTIVE = 0;
+
+//reg DMA3_ACTIVE = 0;
+//reg DMA4_ACTIVE = 0;
+//reg DMA5_ACTIVE = 0;
+//reg DMA6_ACTIVE = 0;
+
+reg GPU_DACK;
+
+reg [23:0] DMA_BYTE_ADDR/*synthesis noprune*/;
+reg [15:0] DMA_BYTE_COUNT/*synthesis noprune*/;
+
+reg [7:0] DMA_STATE;
+
+/*
+always @(posedge SYS_CLK or negedge KEY[0])
+if (!KEY[0]) begin
+	BIU_REG <= 32'h00000000;
+	PSX_SEG <= 8'h00;
+	A0 <= 8'h00;
+	PUTCHAR <= 1'b0;
+	INT_STAT <= 11'h00000000;
+	INT_MASK <= 11'h00000000;
+	MIPS_INT <= 1'b0;
+	DMA0_ACTIVE <= 1'b0;
+	DMA1_ACTIVE <= 1'b0;
+	DMA2_ACTIVE <= 1'b0;
+	DMA3_ACTIVE <= 1'b0;
+	DMA4_ACTIVE <= 1'b0;
+	DMA5_ACTIVE <= 1'b0;
+	DMA6_ACTIVE <= 1'b0;
+	D2_BCR_REG <= 32'h00000000;
+	D2_CHCR_REG <= 32'h00000000;
+	DMA_STATE <= 8'd0;
+	DMA_BYTE_ADDR <= 24'h000000;
+	GPU_DACK <= 1'b0;
+end
+else begin
+	VBLANK_1 <= VBLANK;
+	
+	if (VBLANK_INT_TRIG) INT_STAT[0] <= 1;	// IRQ0
+	if (GPU_INT_TRIG)    INT_STAT[1] <= 1;	// IRQ1
+	if (CDROM_INT_TRIG)  INT_STAT[2] <= 1;	// IRQ2
+	if (DMA_INT_TRIG)    INT_STAT[3] <= 1;	// IRQ3
+	if (TMR0_INT_TRIG)   INT_STAT[4] <= 1;	// IRQ4
+	if (TMR1_INT_TRIG)   INT_STAT[5] <= 1;	// IRQ5
+	if (TMR2_INT_TRIG)   INT_STAT[6] <= 1;	// IRQ6
+	if (PAD_INT_TRIG)    INT_STAT[7] <= 1;	// IRQ7
+	if (SIO_INT_TRIG)    INT_STAT[8] <= 1;	// IRQ8
+	if (SPU_INT_TRIG)    INT_STAT[9] <= 1;	// IRQ9
+	if (LIGHT_INT_TRIG) INT_STAT[10] <= 1;	// IRQ10
+	
+	
+	//MIPS_INT <= INT_STAT & INT_MASK;
+
+//	if (BIU_CS  && (state==18)) BIU_REG <= WRITE_DATA_BACKUP;
+	
+	if (mem_result_index!=0 && mem_result_index==5'd4) A0 <= mem_result[7:0];	// Capture writes to CPU reg "a0" (reg 4). Lower byte only.
+																										// This is for the debug serial output atm, as I'm not sure if the BIOS is using the SIO or not?
+	if (if_pc==32'h000005F4) PUTCHAR <= 1'b1;
+	else PUTCHAR <= 1'b0;
+	
+	
+	// DMA regiter WRITES...
+	if (D2_MADR_CS && state==16) D2_MADR_REG <= WRITE_DATA_BACKUP;	// DMA 2 (GPU) Base Address reg.
+	if (D2_BCR_CS && state==16)   D2_BCR_REG <= WRITE_DATA_BACKUP;	// DMA 2 (GPU) Block Control Reg.
+	if (D2_CHCR_CS && state==16) D2_CHCR_REG <= WRITE_DATA_BACKUP;	// DMA 2 (GPU) Channel Control reg.
+
+	if (DPCR_CS && state==16) DPCR_REG <= WRITE_DATA_BACKUP;	// DMA Priority Control Reg.
+	if (DICR_CS && state==16) DICR_REG <= WRITE_DATA_BACKUP;	// Interrupt Control Reg.
+	
+	
+	case (DMA_STATE)
+	0: begin
+//		if (RESET_COUNT>0) begin	// Still in Reset, clear VRAM!
+//			DMA2_ACTIVE <= 1'b1;
+//			GPU_DACK <= 1'b1;
+//			DMA_STATE <= DMA_STATE + 1;
+//		end
+//		else begin
+//			DMA2_ACTIVE <= 1'b0;
+//			GPU_DACK <= 1'b0;
+//			DMA_STATE <= 2;
+//		end
+
+	end
+	
+	1: begin
+		DMA_BYTE_ADDR <= DMA_BYTE_ADDR + 2;
+		GPU_DACK <= 1'b1;
+		DMA_STATE <= 1'b0;	
+	end
+	
+	
+	2: begin
+		//if (D2_CHCR_REG[24]) begin	// Start/Busy bit set!
+		if (D2_CHCR_REG==32'h01000201 && state==0 && !avm_read) begin	// Check for VRAM Write (with Start bit set)!
+			DMA_BYTE_ADDR <= 0;		// SRAM (VRAM) WRITE Address.
+			
+			if (D2_BCR_REG>0) DMA_BYTE_COUNT <= (D2_BCR_REG[15:0]*D2_BCR_REG[31:16])*2;	// VRAM Writes (Syncmode==1).
+			else DMA_BYTE_COUNT <= 'h19000;
+			
+			DMA2_ACTIVE <= 1'b1;
+			
+			DMA_STATE <= DMA_STATE + 1;
+		end
+	end
+	
+	3: begin
+		if (DMA_BYTE_COUNT>0) begin
+			
+//			if (REAL_GPUDREQ) begin
+//				GPU_DACK <= 1'b1;
+//				D2_MADR_REG <= D2_MADR_REG + 2;			// SDRAM READ Address.
+//				DMA_BYTE_ADDR <= DMA_BYTE_ADDR + 2;		// SRAM (VRAM) WRITE Address.
+				DMA_BYTE_COUNT <= DMA_BYTE_COUNT - 1;
+				
+//				if (!D2_MADR_REG[1]) GPU_WRITE_UPPER <= SDRAM_DOUT;	// TESTING!!
+//			end
+
+			//else DMA2_ACTIVE <= 1'b0;
+			
+			DMA_STATE <= DMA_STATE + 1;				// Have to toggle the GPU_DACK signal between each WORD Write.
+		end
+		else begin
+			DMA2_ACTIVE <= 1'b0;
+			GPU_DACK <= 1'b0;
+			D2_CHCR_REG[24] <= 1'b0;
+			DMA_STATE <= 2;
+		end
+	end
+	
+	4: begin
+		GPU_DACK <= 1'b0;
+		DMA_STATE <= DMA_STATE - 1;
+	end
+	
+	default:;
+	endcase
+end
+*/
+
+// The lower three bits of each NIBBLE of DPCR is the priorty value of the respective DMA channel (0-7. 0=Highest. 7=Lowest).
+// The upper bit of each nibble is the "Master Enable" bit for each channel...
+//
+//  0-2   DMA0, MDECin  Priority      (0..7; 0=Highest, 7=Lowest)
+//  3     DMA0, MDECin  Master Enable (0=Disable, 1=Enable)
+//  4-6   DMA1, MDECout Priority      (0..7; 0=Highest, 7=Lowest)
+//  7     DMA1, MDECout Master Enable (0=Disable, 1=Enable)
+//  8-10  DMA2, GPU     Priority      (0..7; 0=Highest, 7=Lowest)
+//  11    DMA2, GPU     Master Enable (0=Disable, 1=Enable)
+//
+
+
+
+
+
+wire BIU_IS1  = BIU_REG[11];	// Instruction Cache Size, bit [1].
+wire BIU_DS   = BIU_REG[7];	// Data Cache size (might be only 1 bit on the PS1??)
+wire BIU_RAM  = BIU_REG[3];	// Enable D-Cache as a Scratchpad??
+wire BIU_TAG  = BIU_REG[2];	// 
+wire BIU_INV  = BIU_REG[1];	// Invalidate Cache tags?
+wire BIU_LOCK = BIU_REG[0];	// ??
+
+/*
+void psxcpu_device::update_scratchpad()
+{
+	if( ( m_biu & BIU_RAM ) == 0 )
+	{
+		m_program->install_readwrite_handler( 0x1f800000, 0x1f8003ff, read32_delegate( FUNC( psxcpu_device::berr_r ), this ), write32_delegate( FUNC( psxcpu_device::berr_w ), this ) );
+	}
+	else if( ( m_biu & BIU_DS ) == 0 )
+	{
+		m_program->install_read_handler( 0x1f800000, 0x1f8003ff, read32_delegate( FUNC( psxcpu_device::berr_r ), this ) );
+		m_program->nop_write( 0x1f800000, 0x1f8003ff );
+	}
+	else
+	{
+		m_program->install_ram( 0x1f800000, 0x1f8003ff, m_dcache );
+	}
+}*/
+
+
+assign LEDG = {6'b000000, BIOS_CS, MAINRAM_CS|MAINRAM2_CS};
+
+SEG7_LUT_4 SEG7_LUT_4_inst
+(
+	.oSEG0( HEX0 ) ,	// output [6:0] oSEG0
+	.oSEG1( HEX1 ) ,	// output [6:0] oSEG1
+	.oSEG2( HEX2 ) ,	// output [6:0] oSEG2
+	.oSEG3( HEX3 ) ,	// output [6:0] oSEG3
+	.iDIG( BYTE_ADDR[15:0] ) 	// input [15:0] iDIG
+);
+
+
+PLL	PLL_inst (
+	.inclk0 ( CLOCK_27[0] ),
+	.c0 ( DRAM_CONT_CLK ),
+	.c1 ( DRAM_CLK ),
+	.locked ( PLL_LOCKED )
+);
+
+
+reg [3:0] CLK_DIV;
+always @(posedge DRAM_CONT_CLK) CLK_DIV <= CLK_DIV + 1;
+
+wire SYS_CLK = CLK_DIV[2]/*synthesis keep*/;	// SYS_CLK needs to be 1/8th the freq of DRAM_CONT_CLK (so the SDRAM module works properly).
+
+
+
+reg [20:0] RESET_COUNT;
+initial begin
+	RESET_COUNT <= 21'h2FFFFF;
+	SDRAM_INIT <= 1'b1;
+end
+
+
+reg SDRAM_INIT;
+always @(posedge SYS_CLK or negedge KEY[0]) 
+if (!KEY[0]) begin
+	RESET_COUNT <= 21'h2FFFFF;
+	SDRAM_INIT <= 1'b1;
+end
+else begin
+	if (RESET_COUNT>0 && PLL_LOCKED) RESET_COUNT <= RESET_COUNT - 1;
+	else SDRAM_INIT <= 1'b0;
+end
+
+
+assign FL_WE_N = 1'b1;
+assign FL_RST_N = 1'b1;
+assign FL_OE_N = 1'b0;
+assign FL_CE_N = 1'b0;
+
+
+assign FL_ADDR = {BYTE_ADDR[22:2], state[1:0]};
+
+
+/*
+wire [15:0] STACK_DATA_READ;
+STACK_RAM	STACK_RAM_inst (
+	.clock( SYS_CLK ),
+	
+	//.address( BYTE_ADDR[12:2] ),
+	.address( SDRAM_ADDR[9:0] ),
+	
+	//.byteena( {SDRAM_DS[0],SDRAM_DS[1]} ),			// If you swap the DATA byte order, you MUST swap the Byte Enables too! lol
+	//.data( {SDRAM_DIN[7:0], SDRAM_DIN[15:8]} ),	// (I'm such a moron. OzOnE)
+	
+	// "Normal" byte order, for Indy core diag...
+	.byteena( SDRAM_DS[1:0] ),	// If you swap the DATA byte order, you MUST swap the Byte Enables too! lol
+	.data( SDRAM_DIN ),			// (I'm such a moron. OzOnE)
+
+	.wren( SDRAM_WE ),
+
+	.q( STACK_DATA_READ )
+);
+
+
+SCRATCH_RAM		SCRATCH_RAM_inst (
+	.clock( SYS_CLK ),
+	
+	.address( BYTE_ADDR[10:2] ),
+	
+	.byteena( BYTE_ENA_BACKUP ),
+	.data( WRITE_DATA_BACKUP ),
+	
+	.wren( (SCRATCH_CS && WRITE_STATE) ),
+
+	.q( SCRATCH_DOUT )
+);
+*/
+
+
+wire WRITE_STATE = (state==16 | state==18);
+wire READ_STATE  = (state==4 | state==5 | state==6 | state==7);
+
+
+//wire [24:0] SDRAM_ADDR = (DMA2_ACTIVE) ? D2_MADR_REG[20:1] :
+//										 {BYTE_ADDR[20:2], state[1]}/*synthesis keep*/;
+
+wire [21:0] SDRAM_ADDR = {BYTE_ADDR[22:2], state[1]}/*synthesis keep*/;
+
+wire [15:0] SDRAM_DIN = (state==16) ? WRITE_DATA_BACKUP[15:0] : WRITE_DATA_BACKUP[31:16];
+
+
+
+//wire [1:0]  SDRAM_DS  = (READ_STATE | DMA2_ACTIVE) ? 2'b11 :
+//				(state==16) ? BYTE_ENA_BACKUP[1:0] : BYTE_ENA_BACKUP[3:2];
+
+wire [1:0]  SDRAM_DS  = (state==16) ? BYTE_ENA_BACKUP[1:0] : BYTE_ENA_BACKUP[3:2];
+				
+wire [15:0] SDRAM_DOUT/*synthesis keep*/;
+
+//wire SDRAM_OE = (MAINRAM_CS|MAINRAM2_CS & READ_STATE) | DMA2_ACTIVE;
+//wire SDRAM_WE = (MAINRAM_CS|MAINRAM2_CS & WRITE_STATE) & !DMA2_ACTIVE;
+
+wire SDRAM_OE = (BANK1_CS | MAINRAM_CS | MAINRAM2_CS) & READ_STATE;
+wire SDRAM_WE = (BANK1_CS | MAINRAM_CS | MAINRAM2_CS) & WRITE_STATE;
+
+
+assign DRAM_CKE = 1'b1;
+
+sdram sdram_inst
+(
+	// SDRAM chip interface...
+	.sd_data( DRAM_DQ ) ,	// inout [15:0] sd_data
+	
+	.sd_addr( DRAM_ADDR ) ,	// output [11:0] sd_addr
+	.sd_ba( {DRAM_BA_1, DRAM_BA_0} ) ,	// output [1:0] sd_ba
+	
+	.sd_dqm( {DRAM_UDQM, DRAM_LDQM} ) ,	// output [1:0] sd_dqm - ACTIVE LOW !!!
+	.sd_cs( DRAM_CS_N ) ,	// output  sd_cs - ACTIVE LOW !!!
+	.sd_we( DRAM_WE_N ) ,	// output  sd_we - ACTIVE LOW !!!
+	.sd_ras( DRAM_RAS_N ) ,	// output  sd_ras - ACTIVE LOW !!!
+	.sd_cas( DRAM_CAS_N ) ,	// output  sd_cas - ACTIVE LOW !!!
+	
+	
+	// User-side interface...
+	.init( SDRAM_INIT ) ,	// input  init
+	.clk( DRAM_CONT_CLK ) ,	// input  clk
+	.clkref( SYS_CLK ) ,		// input  clkref
+	
+	.din( SDRAM_DIN ) ,		// input [15:0] din
+	.dout( SDRAM_DOUT ) ,	// output [15:0] dout
+	.addr( SDRAM_ADDR ) ,	// input [21:0] addr
+	
+	.ds( SDRAM_DS ) ,			// input [1:0] ds	- ACTIVE HIGH!!
+	.oe( SDRAM_OE ) ,			// input  oe - ACTIVE HIGH!!
+	.we( SDRAM_WE ) 			// input  we - ACTIVE HIGH!!
+);
+
+
+
+wire [23:0] PATT_RGB;
+wire PATT_HS_N;
+wire PATT_VS_N;
+wire [11:0] X_OUT;
+wire [11:0] Y_OUT;
+top_sync_vg_pattern top_sync_vg_pattern_inst
+(
+//	.clk_27m( CLK_27M ) ,		// input  clk_27m
+	.clk_74m( DRAM_CONT_CLK ) ,// input  clk_74m
+//	.clk_148m( CLK_148M ) ,		// input  clk_148m
+	.resetb( PLL_LOCKED ) ,		// input  resetb
+	.adv7513_hs_n( PATT_HS_N ) ,	// output  adv7513_hs_n
+	.adv7513_vs_n( PATT_VS_N ) ,	// output  adv7513_vs_n
+	.adv7513_clk( PATT_CLK ) ,		// output  adv7513_clk
+	.adv7513_d( PATT_RGB ) ,		// output [23:0] adv7513_d
+//	.adv7513_de( adv7513_de ) ,	// output  adv7513_de
+	.x_out( X_OUT ) ,		// output [11:0] x_out
+	.y_out( Y_OUT ) 		// output [11:0] y_out
+);
+
+
+wire [23:0] OSD_RGB;
+wire OSD_FRAME;
+wire CHARBIT;
+OSD OSD_inst
+(
+	.clk( PATT_CLK ) ,				// input  clk
+	.reset_n( KEY[0] ) ,				// input  reset_n
+	.pixel( X_OUT ) ,					// input [11:0] pixel
+	.line( Y_OUT ) ,					// input [11:0] line
+	.vid_in( PATT_RGB ) ,			// input [23:0] vid_in
+	.vid_out( OSD_RGB ) ,			// output [23:0] vid_out
+	.osd_enable( 1'b1 ) ,			// input osd_enable
+//	.total_lines(total_lines) ,	// input [15:0] total_lines
+
+	.write_clk( SYS_CLK ) ,			// input write_clk
+	.char_wr_addr( mem_result_index ) ,	// input [4:0] char_wr_addr
+	.char_in( mem_result ) ,				// input [31:0] char_in
+	
+	.if_pc( if_pc ) ,					// input [31:0] if_pc
+	.cpu_data( data_out ) ,			// input [31:0] cpu_data
+	
+	.BIU( BIU_REG ) ,					// input [31:0] BIO
+	
+	.string0( string0 ) ,			// input [63:0] string0
+
+	.RXDATA( RXDATA ) ,
+	.KEY_PRESSED( KEY_PRESSED ) ,
+	.KEY_RELEASED( KEY_RELEASED ) ,
+	
+	.BP_MATCHED( BP_MATCHED ) ,
+	
+	.char_wren( mem_result_index!=0 ) , // input  char_wren
+
+	.osd_frame_out( OSD_FRAME ) ,	// output osd_frame
+	.charbit( CHARBIT )				// output charbit
+);
+
+
+parameter WINDOW_X = 258+2;
+parameter WINDOW_Y = 64;
+
+wire [10:0] WINDOW_WIDTH  = 1024/* + source*/;
+parameter WINDOW_HEIGHT = 512;
+
+
+/*
+wire [7:0] probe;
+wire [7:0] source;
+source	source_inst (
+	.probe ( probe ),
+	.source ( source )
+);
+*/
+
+reg PS1_WINDOW;
+reg PS1_WINDOW_1;
+reg [10:0] PS1_PIX;
+reg [10:0] PS1_LINE;
+
+reg [15:0] SRAM_PIXEL_DATA;
+always @(posedge PATT_CLK) begin
+	PS1_WINDOW_1 <= PS1_WINDOW;
+	
+	if (!PATT_VS_N) begin
+		PS1_LINE <= 0;
+		PS1_PIX <= 0;
+	end
+	else begin
+		if (PS1_WINDOW_1 & !PS1_WINDOW) begin
+			//PS1_PIX <= 0;
+			PS1_LINE <= PS1_LINE + 1;
+		end
+		else if (PS1_WINDOW) begin
+			PS1_PIX <= PS1_PIX + 1;		
+		end
+	end
+	
+	PS1_WINDOW <= (X_OUT>=WINDOW_X && X_OUT<=WINDOW_X+WINDOW_WIDTH-1 && Y_OUT>=WINDOW_Y && Y_OUT<=WINDOW_Y+WINDOW_HEIGHT-1);
+	SRAM_PIXEL_DATA <= SRAM_DQ;
+end
+
+assign VGA_R = (PS1_WINDOW) ? SRAM_PIXEL_DATA[4:1] : OSD_RGB[23:20];
+assign VGA_G = (PS1_WINDOW) ? SRAM_PIXEL_DATA[9:6]  : OSD_RGB[15:12];
+assign VGA_B = (PS1_WINDOW) ? SRAM_PIXEL_DATA[14:11] : OSD_RGB[7:4];
+
+assign VGA_HS = PATT_HS_N;
+assign VGA_VS = PATT_VS_N;
+
+assign SRAM_UB_N = 1'b0;
+assign SRAM_LB_N = 1'b0;
+
+//assign SRAM_WE_N = (RESET_COUNT>0) ? !GPU_DACK : VRAM_WE_N;
+assign SRAM_WE_N = 1'b1;
+wire VRAM_WE_N = 1'b1;
+
+assign SRAM_OE_N = DMA2_ACTIVE;		// Allow SRAM reads (to VGA) while DMA2 is NOT active.
+
+
+wire [18:0] MY_SRAM_ADDR = (RESET_COUNT>0) ? DMA_BYTE_ADDR[19:1] :
+									/*(!VRAM_WE_N) ? VRAM_ADDR : */
+									{PS1_LINE[8:0], PS1_PIX[9:0]};
+
+/*
+wire [18:0] MY_SRAM_ADDR = (RESET_COUNT>0) ? DMA_BYTE_ADDR[19:1] :	// TESTING!! (bypass FPGA GPU for now. Testing real PS1 GPU on GPIO). OzOnE.
+									(DMA2_ACTIVE) ? DMA_BYTE_ADDR[19:1] : 
+									{PS1_LINE[8:0], PS1_PIX[9:0]};
+*/								
+
+assign SRAM_ADDR = MY_SRAM_ADDR[17:0]; // Lower 512KB (original onboard SRAM on DE1).
+
+assign SRAM_CE_N = MY_SRAM_ADDR[18];	// Lower 512KB (original onboard SRAM on DE1).
+//assign GPIO_0[35] = !MY_SRAM_ADDR[18];	// Upper 512KB (piggy-backed chip!)
+							
+
+assign SRAM_DQ = (GPU_DACK && RESET_COUNT>0) ? 16'hF000 :
+					  /*(!VRAM_WE_N) ? VRAM_DATA :*/ 16'hzzzz;
+
+
+/*
+assign SRAM_DQ = (GPU_DACK && RESET_COUNT>0) ? 16'hF000 :	// TESTING!! (bypass FPGA GPU for now. Testing real PS1 GPU on GPIO). OzOnE.
+					  (DMA2_ACTIVE) ? SDRAM_DOUT : 16'hzzzz;
+*/
+					  
+wire [7:0] RXDATA;
+keyboard keyboard_inst
+(
+	.CLK( SYS_CLK ) ,				// input  CLK
+
+	.PS2_CLK( PS2_CLK ) ,		// input  PS2_CLK
+	.PS2_DAT( PS2_DAT ) ,		// input  PS2_DATA
+
+	.RXDATA( RXDATA ) ,				// output [7:0] RXDATA
+	
+	.KEY_PRESSED( KEY_PRESSED ) ,		// output  KEY_PRESSED
+	.KEY_RELEASED( KEY_RELEASED ) ,	// output  KEY_RELEASED
+	
+	.UP_PULSE( UP_PULSE ) ,		// output  UP_PULSE
+	.DOWN_PULSE( DOWN_PULSE ) ,// output  DOWN_PULSE
+	.LEFT_PULSE( LEFT_PULSE ) ,// output  LEFT_PULSE
+	.RIGHT_PULSE( RIGHT_PULSE )// output  RIGHT_PULSE
+);
+
+
+
+wire [6:0] rf_cmd;
+
+wire [63:0] string0 = (rf_cmd == `CMD_null)			? "null    " :
+							 (rf_cmd == `CMD_3arg_add)		? "3argadd " :
+							 (rf_cmd == `CMD_3arg_addu)	? "3argaddu" :
+							 (rf_cmd == `CMD_3arg_and)		? "3argand " :
+							 (rf_cmd == `CMD_3arg_nor)		? "3argnor " :
+							 (rf_cmd == `CMD_3arg_or)		? "3argor  " :
+							 (rf_cmd == `CMD_3arg_slt)		? "3argslt " :
+							 (rf_cmd == `CMD_3arg_sltu)	? "3argsltu" :
+							 (rf_cmd == `CMD_3arg_sub)		? "3argsub " :
+							 (rf_cmd == `CMD_3arg_subu)	? "3argsubu" :
+							 (rf_cmd == `CMD_3arg_xor)		? "3argxor " :
+							 (rf_cmd == `CMD_3arg_sllv)	? "3argsllv" :
+							 (rf_cmd == `CMD_3arg_srav)	? "3argsrav" :
+							 (rf_cmd == `CMD_3arg_srlv)	? "3argsrlv" :
+							 (rf_cmd == `CMD_sll)			? "sll     " :
+							 (rf_cmd == `CMD_sra)			? "sra     " :
+							 (rf_cmd == `CMD_srl)			? "srl     " :
+							 (rf_cmd == `CMD_addi)			? "addi    " :
+							 (rf_cmd == `CMD_addiu)			? "addiu   " :
+							 (rf_cmd == `CMD_andi)			? "andi    " :
+							 (rf_cmd == `CMD_ori)			? "ori     " :
+							 (rf_cmd == `CMD_slti)			? "slti    " :
+							 (rf_cmd == `CMD_sltiu)			? "sltiu   " :
+							 (rf_cmd == `CMD_xori)			? "xori    " :
+							 (rf_cmd == `CMD_muldiv_mfhi)	? "md_mfhi " :
+							 (rf_cmd == `CMD_muldiv_mflo)	? "md_mflo " :
+							 (rf_cmd == `CMD_muldiv_mthi)	? "md_mthi " :
+							 (rf_cmd == `CMD_muldiv_mtlo)	? "md_mtlo " :
+							 (rf_cmd == `CMD_muldiv_mult)	? "md_mult " :
+							 (rf_cmd == `CMD_muldiv_multu)? "md_multu" :
+							 (rf_cmd == `CMD_muldiv_div)	? "md_div  " :
+							 (rf_cmd == `CMD_muldiv_divu)	? "md_divu " :
+							 (rf_cmd == `CMD_lui)			? "lui     " :
+							 (rf_cmd == `CMD_break)			? "break   " :
+							 (rf_cmd == `CMD_syscall)		? "syscall " :
+							 (rf_cmd == `CMD_mtc0)			? "mtc0    " :
+							 (rf_cmd == `CMD_mfc0)			? "mfc0    " :
+							 (rf_cmd == `CMD_cfc1_detect)	? "cfc1_dtc" :
+							 (rf_cmd == `CMD_cp0_rfe)		? "cp0rfe  " :
+							 (rf_cmd == `CMD_cp0_tlbp)		? "cp0tlbp " :
+							 (rf_cmd == `CMD_cp0_tlbr)		? "cp0tlbr " :
+							 (rf_cmd == `CMD_cp0_tlbwi)	? "cp0tlbwi" :
+							 (rf_cmd == `CMD_cp0_tlbwr)	? "cp0tlbwr" :
+							 (rf_cmd == `CMD_lb)				? "lb      " :
+							 (rf_cmd == `CMD_lbu)			? "lbu     " :
+							 (rf_cmd == `CMD_lh)				? "lh      " :
+							 (rf_cmd == `CMD_lhu)			? "lhu     " :
+							 (rf_cmd == `CMD_lw)				? "lw      " :
+							 (rf_cmd == `CMD_lwl)			? "lwl     " :
+							 (rf_cmd == `CMD_lwr)			? "lwr     " :
+							 (rf_cmd == `CMD_sb)				? "sb      " :
+							 (rf_cmd == `CMD_sh)				? "sh      " :
+							 (rf_cmd == `CMD_sw)				? "sw      " :
+							 (rf_cmd == `CMD_swl)			? "swl     " :
+							 (rf_cmd == `CMD_swr)			? "swr     " :
+							 (rf_cmd == `CMD_beq)			? "beq     " :
+							 (rf_cmd == `CMD_bne)			? "bne     " :
+							 (rf_cmd == `CMD_bgez)			? "bgez    " :
+							 (rf_cmd == `CMD_bgtz)			? "bgtz    " :
+							 (rf_cmd == `CMD_blez)			? "blez    " :
+							 (rf_cmd == `CMD_bltz)			? "bltz    " :
+							 (rf_cmd == `CMD_jr)				? "jr      " :
+							 (rf_cmd == `CMD_bgezal)		? "bgezal  " :
+							 (rf_cmd == `CMD_bltzal)		? "bltzal  " :
+							 (rf_cmd == `CMD_jalr)			? "jalr    " :
+							 (rf_cmd == `CMD_jal)			? "jal     " :
+							 (rf_cmd == `CMD_j)				? "j       " :
+							 (rf_cmd == `CMD_cp0_bc0f)		? "cp0bc0f " :
+							 (rf_cmd == `CMD_cp0_bc0t)		? "cp0bc0t " :
+							 (rf_cmd == `CMD_cp0_bc0_ign)	? "cp0bc0in" :
+
+							 (rf_cmd == `CMD_exc_coproc_unusable)	? "copro_un" :
+							 (rf_cmd == `CMD_exc_reserved_instr)	? "reserved" :
+							 (rf_cmd == `CMD_exc_int_overflow)		? "int_over" :
+							 (rf_cmd == `CMD_exc_load_addr_err)		? "load_adr" :
+							 (rf_cmd == `CMD_exc_store_addr_err)	? "stor_adr" :
+							 (rf_cmd == `CMD_exc_load_tlb)			? "load_tlb" :
+							 (rf_cmd == `CMD_exc_store_tlb)			? "stor_tlb" :
+							 (rf_cmd == `CMD_exc_tlb_load_miss)		? "tlb_load" :
+							 (rf_cmd == `CMD_exc_tlb_store_miss)	? "tlb_stor" :
+							 (rf_cmd == `CMD_exc_tlb_modif)			? "tlb_modi" :
+
+							 (rf_cmd == `CMD_mtc2)						? "mtc2    " :
+							 (rf_cmd == `CMD_mfc2)						? "mfc2    " : "        ";
+							 
+							 
+endmodule
+
+
+/*
+static ADDRESS_MAP_START( psxcpu_internal_map, AS_PROGRAM, 32, psxcpu_device )
+	AM_RANGE( 0x1f800000, 0x1f8003ff ) AM_NOP // scratchpad
+	AM_RANGE( 0x1f800400, 0x1f800fff ) AM_READWRITE( berr_r, berr_w )
+	AM_RANGE( 0x1f801000, 0x1f801003 ) AM_READWRITE( exp_base_r, exp_base_w )
+	AM_RANGE( 0x1f801004, 0x1f801007 ) AM_RAM
+	AM_RANGE( 0x1f801008, 0x1f80100b ) AM_READWRITE( exp_config_r, exp_config_w )
+	AM_RANGE( 0x1f80100c, 0x1f80100f ) AM_RAM
+	AM_RANGE( 0x1f801010, 0x1f801013 ) AM_READWRITE( rom_config_r, rom_config_w )
+	AM_RANGE( 0x1f801014, 0x1f80101f ) AM_RAM
+	// 1f801014 spu delay
+	// 1f801018 dv delay
+	AM_RANGE( 0x1f801020, 0x1f801023 ) AM_READWRITE( com_delay_r, com_delay_w )
+	AM_RANGE( 0x1f801024, 0x1f80102f ) AM_RAM
+	AM_RANGE( 0x1f801040, 0x1f80104f ) AM_DEVREADWRITE( "sio0", psxsio_device, read, write )
+	AM_RANGE( 0x1f801050, 0x1f80105f ) AM_DEVREADWRITE( "sio1", psxsio_device, read, write )
+	AM_RANGE( 0x1f801060, 0x1f801063 ) AM_READWRITE( ram_config_r, ram_config_w )
+	AM_RANGE( 0x1f801064, 0x1f80106f ) AM_RAM
+	AM_RANGE( 0x1f801070, 0x1f801077 ) AM_DEVREADWRITE( "irq", psxirq_device, read, write )
+	AM_RANGE( 0x1f801080, 0x1f8010ff ) AM_DEVREADWRITE( "dma", psxdma_device, read, write )
+	AM_RANGE( 0x1f801100, 0x1f80112f ) AM_DEVREADWRITE( "rcnt", psxrcnt_device, read, write )
+	AM_RANGE( 0x1f801800, 0x1f801803 ) AM_READWRITE8( cd_r, cd_w, 0xffffffff )
+	AM_RANGE( 0x1f801810, 0x1f801817 ) AM_READWRITE( gpu_r, gpu_w )
+	AM_RANGE( 0x1f801820, 0x1f801827 ) AM_DEVREADWRITE( "mdec", psxmdec_device, read, write )
+	AM_RANGE( 0x1f801c00, 0x1f801dff ) AM_READWRITE16( spu_r, spu_w, 0xffffffff )
+	AM_RANGE( 0x1f802020, 0x1f802033 ) AM_RAM // ??
+	// 1f802030 int 2000
+	// 1f802040 dip switches
+	AM_RANGE( 0x1f802040, 0x1f802043 ) AM_WRITENOP
+	AM_RANGE( 0x20000000, 0x7fffffff ) AM_READWRITE( berr_r, berr_w )
+	AM_RANGE( 0xc0000000, 0xfffdffff ) AM_READWRITE( berr_r, berr_w )
+	AM_RANGE( 0xfffe0130, 0xfffe0133 ) AM_READWRITE( biu_r, biu_w )
+ADDRESS_MAP_END
+*/
+

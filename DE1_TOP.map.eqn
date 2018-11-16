@@ -1,0 +1,1711 @@
+-- Copyright (C) 1991-2006 Altera Corporation
+-- Your use of Altera Corporation's design tools, logic functions 
+-- and other software and tools, and its AMPP partner logic 
+-- functions, and any output files any of the foregoing 
+-- (including device programming or simulation files), and any 
+-- associated documentation or information are expressly subject 
+-- to the terms and conditions of the Altera Program License 
+-- Subscription Agreement, Altera MegaCore Function License 
+-- Agreement, or other applicable license agreement, including, 
+-- without limitation, that your use is for the sole purpose of 
+-- programming logic devices manufactured by Altera and sold by 
+-- Altera or its authorized distributors.  Please refer to the 
+-- applicable agreement for further details.
+--CLOCK_24[0] is CLOCK_24[0]
+--operation mode is input
+
+CLOCK_24[0] = INPUT();
+
+
+--CLOCK_24[1] is CLOCK_24[1]
+--operation mode is input
+
+CLOCK_24[1] = INPUT();
+
+
+--CLOCK_27[0] is CLOCK_27[0]
+--operation mode is input
+
+CLOCK_27[0] = INPUT();
+
+
+--CLOCK_27[1] is CLOCK_27[1]
+--operation mode is input
+
+CLOCK_27[1] = INPUT();
+
+
+--CLOCK_50 is CLOCK_50
+--operation mode is input
+
+CLOCK_50 = INPUT();
+
+
+--EXT_CLOCK is EXT_CLOCK
+--operation mode is input
+
+EXT_CLOCK = INPUT();
+
+
+--KEY[0] is KEY[0]
+--operation mode is input
+
+KEY[0] = INPUT();
+
+
+--KEY[1] is KEY[1]
+--operation mode is input
+
+KEY[1] = INPUT();
+
+
+--KEY[2] is KEY[2]
+--operation mode is input
+
+KEY[2] = INPUT();
+
+
+--KEY[3] is KEY[3]
+--operation mode is input
+
+KEY[3] = INPUT();
+
+
+--SW[0] is SW[0]
+--operation mode is input
+
+SW[0] = INPUT();
+
+
+--SW[1] is SW[1]
+--operation mode is input
+
+SW[1] = INPUT();
+
+
+--SW[2] is SW[2]
+--operation mode is input
+
+SW[2] = INPUT();
+
+
+--SW[3] is SW[3]
+--operation mode is input
+
+SW[3] = INPUT();
+
+
+--SW[4] is SW[4]
+--operation mode is input
+
+SW[4] = INPUT();
+
+
+--SW[5] is SW[5]
+--operation mode is input
+
+SW[5] = INPUT();
+
+
+--SW[6] is SW[6]
+--operation mode is input
+
+SW[6] = INPUT();
+
+
+--SW[7] is SW[7]
+--operation mode is input
+
+SW[7] = INPUT();
+
+
+--SW[8] is SW[8]
+--operation mode is input
+
+SW[8] = INPUT();
+
+
+--SW[9] is SW[9]
+--operation mode is input
+
+SW[9] = INPUT();
+
+
+--UART_RXD is UART_RXD
+--operation mode is input
+
+UART_RXD = INPUT();
+
+
+--TDI is TDI
+--operation mode is input
+
+TDI = INPUT();
+
+
+--TCK is TCK
+--operation mode is input
+
+TCK = INPUT();
+
+
+--TCS is TCS
+--operation mode is input
+
+TCS = INPUT();
+
+
+--PS2_DAT is PS2_DAT
+--operation mode is input
+
+PS2_DAT = INPUT();
+
+
+--PS2_CLK is PS2_CLK
+--operation mode is input
+
+PS2_CLK = INPUT();
+
+
+--AUD_ADCDAT is AUD_ADCDAT
+--operation mode is input
+
+AUD_ADCDAT = INPUT();
+
+
+--HEX0[0] is HEX0[0]
+--operation mode is output
+
+HEX0[0] = OUTPUT(GND);
+
+
+--HEX0[1] is HEX0[1]
+--operation mode is output
+
+HEX0[1] = OUTPUT(GND);
+
+
+--HEX0[2] is HEX0[2]
+--operation mode is output
+
+HEX0[2] = OUTPUT(GND);
+
+
+--HEX0[3] is HEX0[3]
+--operation mode is output
+
+HEX0[3] = OUTPUT(GND);
+
+
+--HEX0[4] is HEX0[4]
+--operation mode is output
+
+HEX0[4] = OUTPUT(GND);
+
+
+--HEX0[5] is HEX0[5]
+--operation mode is output
+
+HEX0[5] = OUTPUT(GND);
+
+
+--HEX0[6] is HEX0[6]
+--operation mode is output
+
+HEX0[6] = OUTPUT(GND);
+
+
+--HEX1[0] is HEX1[0]
+--operation mode is output
+
+HEX1[0] = OUTPUT(GND);
+
+
+--HEX1[1] is HEX1[1]
+--operation mode is output
+
+HEX1[1] = OUTPUT(GND);
+
+
+--HEX1[2] is HEX1[2]
+--operation mode is output
+
+HEX1[2] = OUTPUT(GND);
+
+
+--HEX1[3] is HEX1[3]
+--operation mode is output
+
+HEX1[3] = OUTPUT(GND);
+
+
+--HEX1[4] is HEX1[4]
+--operation mode is output
+
+HEX1[4] = OUTPUT(GND);
+
+
+--HEX1[5] is HEX1[5]
+--operation mode is output
+
+HEX1[5] = OUTPUT(GND);
+
+
+--HEX1[6] is HEX1[6]
+--operation mode is output
+
+HEX1[6] = OUTPUT(GND);
+
+
+--HEX2[0] is HEX2[0]
+--operation mode is output
+
+HEX2[0] = OUTPUT(GND);
+
+
+--HEX2[1] is HEX2[1]
+--operation mode is output
+
+HEX2[1] = OUTPUT(GND);
+
+
+--HEX2[2] is HEX2[2]
+--operation mode is output
+
+HEX2[2] = OUTPUT(GND);
+
+
+--HEX2[3] is HEX2[3]
+--operation mode is output
+
+HEX2[3] = OUTPUT(GND);
+
+
+--HEX2[4] is HEX2[4]
+--operation mode is output
+
+HEX2[4] = OUTPUT(GND);
+
+
+--HEX2[5] is HEX2[5]
+--operation mode is output
+
+HEX2[5] = OUTPUT(GND);
+
+
+--HEX2[6] is HEX2[6]
+--operation mode is output
+
+HEX2[6] = OUTPUT(GND);
+
+
+--HEX3[0] is HEX3[0]
+--operation mode is output
+
+HEX3[0] = OUTPUT(GND);
+
+
+--HEX3[1] is HEX3[1]
+--operation mode is output
+
+HEX3[1] = OUTPUT(GND);
+
+
+--HEX3[2] is HEX3[2]
+--operation mode is output
+
+HEX3[2] = OUTPUT(GND);
+
+
+--HEX3[3] is HEX3[3]
+--operation mode is output
+
+HEX3[3] = OUTPUT(GND);
+
+
+--HEX3[4] is HEX3[4]
+--operation mode is output
+
+HEX3[4] = OUTPUT(GND);
+
+
+--HEX3[5] is HEX3[5]
+--operation mode is output
+
+HEX3[5] = OUTPUT(GND);
+
+
+--HEX3[6] is HEX3[6]
+--operation mode is output
+
+HEX3[6] = OUTPUT(GND);
+
+
+--LEDG[0] is LEDG[0]
+--operation mode is output
+
+LEDG[0] = OUTPUT(VCC);
+
+
+--LEDG[1] is LEDG[1]
+--operation mode is output
+
+LEDG[1] = OUTPUT(VCC);
+
+
+--LEDG[2] is LEDG[2]
+--operation mode is output
+
+LEDG[2] = OUTPUT(VCC);
+
+
+--LEDG[3] is LEDG[3]
+--operation mode is output
+
+LEDG[3] = OUTPUT(VCC);
+
+
+--LEDG[4] is LEDG[4]
+--operation mode is output
+
+LEDG[4] = OUTPUT(VCC);
+
+
+--LEDG[5] is LEDG[5]
+--operation mode is output
+
+LEDG[5] = OUTPUT(VCC);
+
+
+--LEDG[6] is LEDG[6]
+--operation mode is output
+
+LEDG[6] = OUTPUT(VCC);
+
+
+--LEDG[7] is LEDG[7]
+--operation mode is output
+
+LEDG[7] = OUTPUT(VCC);
+
+
+--LEDR[0] is LEDR[0]
+--operation mode is output
+
+LEDR[0] = OUTPUT(VCC);
+
+
+--LEDR[1] is LEDR[1]
+--operation mode is output
+
+LEDR[1] = OUTPUT(VCC);
+
+
+--LEDR[2] is LEDR[2]
+--operation mode is output
+
+LEDR[2] = OUTPUT(VCC);
+
+
+--LEDR[3] is LEDR[3]
+--operation mode is output
+
+LEDR[3] = OUTPUT(VCC);
+
+
+--LEDR[4] is LEDR[4]
+--operation mode is output
+
+LEDR[4] = OUTPUT(VCC);
+
+
+--LEDR[5] is LEDR[5]
+--operation mode is output
+
+LEDR[5] = OUTPUT(VCC);
+
+
+--LEDR[6] is LEDR[6]
+--operation mode is output
+
+LEDR[6] = OUTPUT(VCC);
+
+
+--LEDR[7] is LEDR[7]
+--operation mode is output
+
+LEDR[7] = OUTPUT(VCC);
+
+
+--LEDR[8] is LEDR[8]
+--operation mode is output
+
+LEDR[8] = OUTPUT(VCC);
+
+
+--LEDR[9] is LEDR[9]
+--operation mode is output
+
+LEDR[9] = OUTPUT(VCC);
+
+
+--UART_TXD is UART_TXD
+--operation mode is output
+
+UART_TXD = OUTPUT(GND);
+
+
+--DRAM_ADDR[0] is DRAM_ADDR[0]
+--operation mode is output
+
+DRAM_ADDR[0] = OUTPUT(GND);
+
+
+--DRAM_ADDR[1] is DRAM_ADDR[1]
+--operation mode is output
+
+DRAM_ADDR[1] = OUTPUT(GND);
+
+
+--DRAM_ADDR[2] is DRAM_ADDR[2]
+--operation mode is output
+
+DRAM_ADDR[2] = OUTPUT(GND);
+
+
+--DRAM_ADDR[3] is DRAM_ADDR[3]
+--operation mode is output
+
+DRAM_ADDR[3] = OUTPUT(GND);
+
+
+--DRAM_ADDR[4] is DRAM_ADDR[4]
+--operation mode is output
+
+DRAM_ADDR[4] = OUTPUT(GND);
+
+
+--DRAM_ADDR[5] is DRAM_ADDR[5]
+--operation mode is output
+
+DRAM_ADDR[5] = OUTPUT(GND);
+
+
+--DRAM_ADDR[6] is DRAM_ADDR[6]
+--operation mode is output
+
+DRAM_ADDR[6] = OUTPUT(GND);
+
+
+--DRAM_ADDR[7] is DRAM_ADDR[7]
+--operation mode is output
+
+DRAM_ADDR[7] = OUTPUT(GND);
+
+
+--DRAM_ADDR[8] is DRAM_ADDR[8]
+--operation mode is output
+
+DRAM_ADDR[8] = OUTPUT(GND);
+
+
+--DRAM_ADDR[9] is DRAM_ADDR[9]
+--operation mode is output
+
+DRAM_ADDR[9] = OUTPUT(GND);
+
+
+--DRAM_ADDR[10] is DRAM_ADDR[10]
+--operation mode is output
+
+DRAM_ADDR[10] = OUTPUT(GND);
+
+
+--DRAM_ADDR[11] is DRAM_ADDR[11]
+--operation mode is output
+
+DRAM_ADDR[11] = OUTPUT(GND);
+
+
+--DRAM_LDQM is DRAM_LDQM
+--operation mode is output
+
+DRAM_LDQM = OUTPUT(GND);
+
+
+--DRAM_UDQM is DRAM_UDQM
+--operation mode is output
+
+DRAM_UDQM = OUTPUT(GND);
+
+
+--DRAM_WE_N is DRAM_WE_N
+--operation mode is output
+
+DRAM_WE_N = OUTPUT(GND);
+
+
+--DRAM_CAS_N is DRAM_CAS_N
+--operation mode is output
+
+DRAM_CAS_N = OUTPUT(GND);
+
+
+--DRAM_RAS_N is DRAM_RAS_N
+--operation mode is output
+
+DRAM_RAS_N = OUTPUT(GND);
+
+
+--DRAM_CS_N is DRAM_CS_N
+--operation mode is output
+
+DRAM_CS_N = OUTPUT(GND);
+
+
+--DRAM_BA_0 is DRAM_BA_0
+--operation mode is output
+
+DRAM_BA_0 = OUTPUT(GND);
+
+
+--DRAM_BA_1 is DRAM_BA_1
+--operation mode is output
+
+DRAM_BA_1 = OUTPUT(GND);
+
+
+--DRAM_CLK is DRAM_CLK
+--operation mode is output
+
+DRAM_CLK = OUTPUT(GND);
+
+
+--DRAM_CKE is DRAM_CKE
+--operation mode is output
+
+DRAM_CKE = OUTPUT(GND);
+
+
+--FL_ADDR[0] is FL_ADDR[0]
+--operation mode is output
+
+FL_ADDR[0] = OUTPUT(GND);
+
+
+--FL_ADDR[1] is FL_ADDR[1]
+--operation mode is output
+
+FL_ADDR[1] = OUTPUT(GND);
+
+
+--FL_ADDR[2] is FL_ADDR[2]
+--operation mode is output
+
+FL_ADDR[2] = OUTPUT(GND);
+
+
+--FL_ADDR[3] is FL_ADDR[3]
+--operation mode is output
+
+FL_ADDR[3] = OUTPUT(GND);
+
+
+--FL_ADDR[4] is FL_ADDR[4]
+--operation mode is output
+
+FL_ADDR[4] = OUTPUT(GND);
+
+
+--FL_ADDR[5] is FL_ADDR[5]
+--operation mode is output
+
+FL_ADDR[5] = OUTPUT(GND);
+
+
+--FL_ADDR[6] is FL_ADDR[6]
+--operation mode is output
+
+FL_ADDR[6] = OUTPUT(GND);
+
+
+--FL_ADDR[7] is FL_ADDR[7]
+--operation mode is output
+
+FL_ADDR[7] = OUTPUT(GND);
+
+
+--FL_ADDR[8] is FL_ADDR[8]
+--operation mode is output
+
+FL_ADDR[8] = OUTPUT(GND);
+
+
+--FL_ADDR[9] is FL_ADDR[9]
+--operation mode is output
+
+FL_ADDR[9] = OUTPUT(GND);
+
+
+--FL_ADDR[10] is FL_ADDR[10]
+--operation mode is output
+
+FL_ADDR[10] = OUTPUT(GND);
+
+
+--FL_ADDR[11] is FL_ADDR[11]
+--operation mode is output
+
+FL_ADDR[11] = OUTPUT(GND);
+
+
+--FL_ADDR[12] is FL_ADDR[12]
+--operation mode is output
+
+FL_ADDR[12] = OUTPUT(GND);
+
+
+--FL_ADDR[13] is FL_ADDR[13]
+--operation mode is output
+
+FL_ADDR[13] = OUTPUT(GND);
+
+
+--FL_ADDR[14] is FL_ADDR[14]
+--operation mode is output
+
+FL_ADDR[14] = OUTPUT(GND);
+
+
+--FL_ADDR[15] is FL_ADDR[15]
+--operation mode is output
+
+FL_ADDR[15] = OUTPUT(GND);
+
+
+--FL_ADDR[16] is FL_ADDR[16]
+--operation mode is output
+
+FL_ADDR[16] = OUTPUT(GND);
+
+
+--FL_ADDR[17] is FL_ADDR[17]
+--operation mode is output
+
+FL_ADDR[17] = OUTPUT(GND);
+
+
+--FL_ADDR[18] is FL_ADDR[18]
+--operation mode is output
+
+FL_ADDR[18] = OUTPUT(GND);
+
+
+--FL_ADDR[19] is FL_ADDR[19]
+--operation mode is output
+
+FL_ADDR[19] = OUTPUT(GND);
+
+
+--FL_ADDR[20] is FL_ADDR[20]
+--operation mode is output
+
+FL_ADDR[20] = OUTPUT(GND);
+
+
+--FL_ADDR[21] is FL_ADDR[21]
+--operation mode is output
+
+FL_ADDR[21] = OUTPUT(GND);
+
+
+--FL_WE_N is FL_WE_N
+--operation mode is output
+
+FL_WE_N = OUTPUT(GND);
+
+
+--FL_RST_N is FL_RST_N
+--operation mode is output
+
+FL_RST_N = OUTPUT(GND);
+
+
+--FL_OE_N is FL_OE_N
+--operation mode is output
+
+FL_OE_N = OUTPUT(GND);
+
+
+--FL_CE_N is FL_CE_N
+--operation mode is output
+
+FL_CE_N = OUTPUT(GND);
+
+
+--SRAM_ADDR[0] is SRAM_ADDR[0]
+--operation mode is output
+
+SRAM_ADDR[0] = OUTPUT(GND);
+
+
+--SRAM_ADDR[1] is SRAM_ADDR[1]
+--operation mode is output
+
+SRAM_ADDR[1] = OUTPUT(GND);
+
+
+--SRAM_ADDR[2] is SRAM_ADDR[2]
+--operation mode is output
+
+SRAM_ADDR[2] = OUTPUT(GND);
+
+
+--SRAM_ADDR[3] is SRAM_ADDR[3]
+--operation mode is output
+
+SRAM_ADDR[3] = OUTPUT(GND);
+
+
+--SRAM_ADDR[4] is SRAM_ADDR[4]
+--operation mode is output
+
+SRAM_ADDR[4] = OUTPUT(GND);
+
+
+--SRAM_ADDR[5] is SRAM_ADDR[5]
+--operation mode is output
+
+SRAM_ADDR[5] = OUTPUT(GND);
+
+
+--SRAM_ADDR[6] is SRAM_ADDR[6]
+--operation mode is output
+
+SRAM_ADDR[6] = OUTPUT(GND);
+
+
+--SRAM_ADDR[7] is SRAM_ADDR[7]
+--operation mode is output
+
+SRAM_ADDR[7] = OUTPUT(GND);
+
+
+--SRAM_ADDR[8] is SRAM_ADDR[8]
+--operation mode is output
+
+SRAM_ADDR[8] = OUTPUT(GND);
+
+
+--SRAM_ADDR[9] is SRAM_ADDR[9]
+--operation mode is output
+
+SRAM_ADDR[9] = OUTPUT(GND);
+
+
+--SRAM_ADDR[10] is SRAM_ADDR[10]
+--operation mode is output
+
+SRAM_ADDR[10] = OUTPUT(GND);
+
+
+--SRAM_ADDR[11] is SRAM_ADDR[11]
+--operation mode is output
+
+SRAM_ADDR[11] = OUTPUT(GND);
+
+
+--SRAM_ADDR[12] is SRAM_ADDR[12]
+--operation mode is output
+
+SRAM_ADDR[12] = OUTPUT(GND);
+
+
+--SRAM_ADDR[13] is SRAM_ADDR[13]
+--operation mode is output
+
+SRAM_ADDR[13] = OUTPUT(GND);
+
+
+--SRAM_ADDR[14] is SRAM_ADDR[14]
+--operation mode is output
+
+SRAM_ADDR[14] = OUTPUT(GND);
+
+
+--SRAM_ADDR[15] is SRAM_ADDR[15]
+--operation mode is output
+
+SRAM_ADDR[15] = OUTPUT(GND);
+
+
+--SRAM_ADDR[16] is SRAM_ADDR[16]
+--operation mode is output
+
+SRAM_ADDR[16] = OUTPUT(GND);
+
+
+--SRAM_ADDR[17] is SRAM_ADDR[17]
+--operation mode is output
+
+SRAM_ADDR[17] = OUTPUT(GND);
+
+
+--SRAM_UB_N is SRAM_UB_N
+--operation mode is output
+
+SRAM_UB_N = OUTPUT(GND);
+
+
+--SRAM_LB_N is SRAM_LB_N
+--operation mode is output
+
+SRAM_LB_N = OUTPUT(GND);
+
+
+--SRAM_WE_N is SRAM_WE_N
+--operation mode is output
+
+SRAM_WE_N = OUTPUT(GND);
+
+
+--SRAM_CE_N is SRAM_CE_N
+--operation mode is output
+
+SRAM_CE_N = OUTPUT(GND);
+
+
+--SRAM_OE_N is SRAM_OE_N
+--operation mode is output
+
+SRAM_OE_N = OUTPUT(GND);
+
+
+--SD_CLK is SD_CLK
+--operation mode is output
+
+SD_CLK = OUTPUT(GND);
+
+
+--TDO is TDO
+--operation mode is output
+
+TDO = OUTPUT(GND);
+
+
+--I2C_SCLK is I2C_SCLK
+--operation mode is output
+
+I2C_SCLK = OUTPUT(GND);
+
+
+--VGA_HS is VGA_HS
+--operation mode is output
+
+VGA_HS = OUTPUT(GND);
+
+
+--VGA_VS is VGA_VS
+--operation mode is output
+
+VGA_VS = OUTPUT(GND);
+
+
+--VGA_R[0] is VGA_R[0]
+--operation mode is output
+
+VGA_R[0] = OUTPUT(GND);
+
+
+--VGA_R[1] is VGA_R[1]
+--operation mode is output
+
+VGA_R[1] = OUTPUT(GND);
+
+
+--VGA_R[2] is VGA_R[2]
+--operation mode is output
+
+VGA_R[2] = OUTPUT(GND);
+
+
+--VGA_R[3] is VGA_R[3]
+--operation mode is output
+
+VGA_R[3] = OUTPUT(GND);
+
+
+--VGA_G[0] is VGA_G[0]
+--operation mode is output
+
+VGA_G[0] = OUTPUT(GND);
+
+
+--VGA_G[1] is VGA_G[1]
+--operation mode is output
+
+VGA_G[1] = OUTPUT(GND);
+
+
+--VGA_G[2] is VGA_G[2]
+--operation mode is output
+
+VGA_G[2] = OUTPUT(GND);
+
+
+--VGA_G[3] is VGA_G[3]
+--operation mode is output
+
+VGA_G[3] = OUTPUT(GND);
+
+
+--VGA_B[0] is VGA_B[0]
+--operation mode is output
+
+VGA_B[0] = OUTPUT(GND);
+
+
+--VGA_B[1] is VGA_B[1]
+--operation mode is output
+
+VGA_B[1] = OUTPUT(GND);
+
+
+--VGA_B[2] is VGA_B[2]
+--operation mode is output
+
+VGA_B[2] = OUTPUT(GND);
+
+
+--VGA_B[3] is VGA_B[3]
+--operation mode is output
+
+VGA_B[3] = OUTPUT(GND);
+
+
+--AUD_DACDAT is AUD_DACDAT
+--operation mode is output
+
+AUD_DACDAT = OUTPUT(GND);
+
+
+--AUD_XCK is AUD_XCK
+--operation mode is output
+
+AUD_XCK = OUTPUT(GND);
+
+
+--SD_DAT3 is SD_DAT3
+--operation mode is bidir
+
+SD_DAT3 = BIDIR(OPNDRN(VCC));
+
+
+--SD_CMD is SD_CMD
+--operation mode is bidir
+
+SD_CMD = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[0] is DRAM_DQ[0]
+--operation mode is bidir
+
+DRAM_DQ[0] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[1] is DRAM_DQ[1]
+--operation mode is bidir
+
+DRAM_DQ[1] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[2] is DRAM_DQ[2]
+--operation mode is bidir
+
+DRAM_DQ[2] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[3] is DRAM_DQ[3]
+--operation mode is bidir
+
+DRAM_DQ[3] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[4] is DRAM_DQ[4]
+--operation mode is bidir
+
+DRAM_DQ[4] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[5] is DRAM_DQ[5]
+--operation mode is bidir
+
+DRAM_DQ[5] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[6] is DRAM_DQ[6]
+--operation mode is bidir
+
+DRAM_DQ[6] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[7] is DRAM_DQ[7]
+--operation mode is bidir
+
+DRAM_DQ[7] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[8] is DRAM_DQ[8]
+--operation mode is bidir
+
+DRAM_DQ[8] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[9] is DRAM_DQ[9]
+--operation mode is bidir
+
+DRAM_DQ[9] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[10] is DRAM_DQ[10]
+--operation mode is bidir
+
+DRAM_DQ[10] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[11] is DRAM_DQ[11]
+--operation mode is bidir
+
+DRAM_DQ[11] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[12] is DRAM_DQ[12]
+--operation mode is bidir
+
+DRAM_DQ[12] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[13] is DRAM_DQ[13]
+--operation mode is bidir
+
+DRAM_DQ[13] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[14] is DRAM_DQ[14]
+--operation mode is bidir
+
+DRAM_DQ[14] = BIDIR(OPNDRN(VCC));
+
+
+--DRAM_DQ[15] is DRAM_DQ[15]
+--operation mode is bidir
+
+DRAM_DQ[15] = BIDIR(OPNDRN(VCC));
+
+
+--FL_DQ[0] is FL_DQ[0]
+--operation mode is bidir
+
+FL_DQ[0] = BIDIR(OPNDRN(VCC));
+
+
+--FL_DQ[1] is FL_DQ[1]
+--operation mode is bidir
+
+FL_DQ[1] = BIDIR(OPNDRN(VCC));
+
+
+--FL_DQ[2] is FL_DQ[2]
+--operation mode is bidir
+
+FL_DQ[2] = BIDIR(OPNDRN(VCC));
+
+
+--FL_DQ[3] is FL_DQ[3]
+--operation mode is bidir
+
+FL_DQ[3] = BIDIR(OPNDRN(VCC));
+
+
+--FL_DQ[4] is FL_DQ[4]
+--operation mode is bidir
+
+FL_DQ[4] = BIDIR(OPNDRN(VCC));
+
+
+--FL_DQ[5] is FL_DQ[5]
+--operation mode is bidir
+
+FL_DQ[5] = BIDIR(OPNDRN(VCC));
+
+
+--FL_DQ[6] is FL_DQ[6]
+--operation mode is bidir
+
+FL_DQ[6] = BIDIR(OPNDRN(VCC));
+
+
+--FL_DQ[7] is FL_DQ[7]
+--operation mode is bidir
+
+FL_DQ[7] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[0] is SRAM_DQ[0]
+--operation mode is bidir
+
+SRAM_DQ[0] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[1] is SRAM_DQ[1]
+--operation mode is bidir
+
+SRAM_DQ[1] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[2] is SRAM_DQ[2]
+--operation mode is bidir
+
+SRAM_DQ[2] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[3] is SRAM_DQ[3]
+--operation mode is bidir
+
+SRAM_DQ[3] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[4] is SRAM_DQ[4]
+--operation mode is bidir
+
+SRAM_DQ[4] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[5] is SRAM_DQ[5]
+--operation mode is bidir
+
+SRAM_DQ[5] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[6] is SRAM_DQ[6]
+--operation mode is bidir
+
+SRAM_DQ[6] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[7] is SRAM_DQ[7]
+--operation mode is bidir
+
+SRAM_DQ[7] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[8] is SRAM_DQ[8]
+--operation mode is bidir
+
+SRAM_DQ[8] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[9] is SRAM_DQ[9]
+--operation mode is bidir
+
+SRAM_DQ[9] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[10] is SRAM_DQ[10]
+--operation mode is bidir
+
+SRAM_DQ[10] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[11] is SRAM_DQ[11]
+--operation mode is bidir
+
+SRAM_DQ[11] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[12] is SRAM_DQ[12]
+--operation mode is bidir
+
+SRAM_DQ[12] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[13] is SRAM_DQ[13]
+--operation mode is bidir
+
+SRAM_DQ[13] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[14] is SRAM_DQ[14]
+--operation mode is bidir
+
+SRAM_DQ[14] = BIDIR(OPNDRN(VCC));
+
+
+--SRAM_DQ[15] is SRAM_DQ[15]
+--operation mode is bidir
+
+SRAM_DQ[15] = BIDIR(OPNDRN(VCC));
+
+
+--SD_DAT is SD_DAT
+--operation mode is bidir
+
+SD_DAT = BIDIR(OPNDRN(VCC));
+
+
+--I2C_SDAT is I2C_SDAT
+--operation mode is bidir
+
+I2C_SDAT = BIDIR(OPNDRN(VCC));
+
+
+--AUD_ADCLRCK is AUD_ADCLRCK
+--operation mode is bidir
+
+AUD_ADCLRCK = BIDIR(OPNDRN(VCC));
+
+
+--AUD_DACLRCK is AUD_DACLRCK
+--operation mode is bidir
+
+AUD_DACLRCK = BIDIR(OPNDRN(VCC));
+
+
+--AUD_BCLK is AUD_BCLK
+--operation mode is bidir
+
+AUD_BCLK = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[0] is GPIO_0[0]
+--operation mode is bidir
+
+GPIO_0[0] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[1] is GPIO_0[1]
+--operation mode is bidir
+
+GPIO_0[1] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[2] is GPIO_0[2]
+--operation mode is bidir
+
+GPIO_0[2] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[3] is GPIO_0[3]
+--operation mode is bidir
+
+GPIO_0[3] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[4] is GPIO_0[4]
+--operation mode is bidir
+
+GPIO_0[4] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[5] is GPIO_0[5]
+--operation mode is bidir
+
+GPIO_0[5] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[6] is GPIO_0[6]
+--operation mode is bidir
+
+GPIO_0[6] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[7] is GPIO_0[7]
+--operation mode is bidir
+
+GPIO_0[7] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[8] is GPIO_0[8]
+--operation mode is bidir
+
+GPIO_0[8] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[9] is GPIO_0[9]
+--operation mode is bidir
+
+GPIO_0[9] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[10] is GPIO_0[10]
+--operation mode is bidir
+
+GPIO_0[10] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[11] is GPIO_0[11]
+--operation mode is bidir
+
+GPIO_0[11] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[12] is GPIO_0[12]
+--operation mode is bidir
+
+GPIO_0[12] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[13] is GPIO_0[13]
+--operation mode is bidir
+
+GPIO_0[13] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[14] is GPIO_0[14]
+--operation mode is bidir
+
+GPIO_0[14] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[15] is GPIO_0[15]
+--operation mode is bidir
+
+GPIO_0[15] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[16] is GPIO_0[16]
+--operation mode is bidir
+
+GPIO_0[16] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[17] is GPIO_0[17]
+--operation mode is bidir
+
+GPIO_0[17] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[18] is GPIO_0[18]
+--operation mode is bidir
+
+GPIO_0[18] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[19] is GPIO_0[19]
+--operation mode is bidir
+
+GPIO_0[19] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[20] is GPIO_0[20]
+--operation mode is bidir
+
+GPIO_0[20] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[21] is GPIO_0[21]
+--operation mode is bidir
+
+GPIO_0[21] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[22] is GPIO_0[22]
+--operation mode is bidir
+
+GPIO_0[22] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[23] is GPIO_0[23]
+--operation mode is bidir
+
+GPIO_0[23] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[24] is GPIO_0[24]
+--operation mode is bidir
+
+GPIO_0[24] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[25] is GPIO_0[25]
+--operation mode is bidir
+
+GPIO_0[25] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[26] is GPIO_0[26]
+--operation mode is bidir
+
+GPIO_0[26] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[27] is GPIO_0[27]
+--operation mode is bidir
+
+GPIO_0[27] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[28] is GPIO_0[28]
+--operation mode is bidir
+
+GPIO_0[28] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[29] is GPIO_0[29]
+--operation mode is bidir
+
+GPIO_0[29] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[30] is GPIO_0[30]
+--operation mode is bidir
+
+GPIO_0[30] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[31] is GPIO_0[31]
+--operation mode is bidir
+
+GPIO_0[31] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[32] is GPIO_0[32]
+--operation mode is bidir
+
+GPIO_0[32] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[33] is GPIO_0[33]
+--operation mode is bidir
+
+GPIO_0[33] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[34] is GPIO_0[34]
+--operation mode is bidir
+
+GPIO_0[34] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_0[35] is GPIO_0[35]
+--operation mode is bidir
+
+GPIO_0[35] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[0] is GPIO_1[0]
+--operation mode is bidir
+
+GPIO_1[0] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[1] is GPIO_1[1]
+--operation mode is bidir
+
+GPIO_1[1] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[2] is GPIO_1[2]
+--operation mode is bidir
+
+GPIO_1[2] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[3] is GPIO_1[3]
+--operation mode is bidir
+
+GPIO_1[3] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[4] is GPIO_1[4]
+--operation mode is bidir
+
+GPIO_1[4] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[5] is GPIO_1[5]
+--operation mode is bidir
+
+GPIO_1[5] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[6] is GPIO_1[6]
+--operation mode is bidir
+
+GPIO_1[6] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[7] is GPIO_1[7]
+--operation mode is bidir
+
+GPIO_1[7] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[8] is GPIO_1[8]
+--operation mode is bidir
+
+GPIO_1[8] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[9] is GPIO_1[9]
+--operation mode is bidir
+
+GPIO_1[9] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[10] is GPIO_1[10]
+--operation mode is bidir
+
+GPIO_1[10] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[11] is GPIO_1[11]
+--operation mode is bidir
+
+GPIO_1[11] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[12] is GPIO_1[12]
+--operation mode is bidir
+
+GPIO_1[12] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[13] is GPIO_1[13]
+--operation mode is bidir
+
+GPIO_1[13] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[14] is GPIO_1[14]
+--operation mode is bidir
+
+GPIO_1[14] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[15] is GPIO_1[15]
+--operation mode is bidir
+
+GPIO_1[15] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[16] is GPIO_1[16]
+--operation mode is bidir
+
+GPIO_1[16] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[17] is GPIO_1[17]
+--operation mode is bidir
+
+GPIO_1[17] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[18] is GPIO_1[18]
+--operation mode is bidir
+
+GPIO_1[18] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[19] is GPIO_1[19]
+--operation mode is bidir
+
+GPIO_1[19] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[20] is GPIO_1[20]
+--operation mode is bidir
+
+GPIO_1[20] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[21] is GPIO_1[21]
+--operation mode is bidir
+
+GPIO_1[21] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[22] is GPIO_1[22]
+--operation mode is bidir
+
+GPIO_1[22] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[23] is GPIO_1[23]
+--operation mode is bidir
+
+GPIO_1[23] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[24] is GPIO_1[24]
+--operation mode is bidir
+
+GPIO_1[24] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[25] is GPIO_1[25]
+--operation mode is bidir
+
+GPIO_1[25] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[26] is GPIO_1[26]
+--operation mode is bidir
+
+GPIO_1[26] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[27] is GPIO_1[27]
+--operation mode is bidir
+
+GPIO_1[27] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[28] is GPIO_1[28]
+--operation mode is bidir
+
+GPIO_1[28] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[29] is GPIO_1[29]
+--operation mode is bidir
+
+GPIO_1[29] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[30] is GPIO_1[30]
+--operation mode is bidir
+
+GPIO_1[30] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[31] is GPIO_1[31]
+--operation mode is bidir
+
+GPIO_1[31] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[32] is GPIO_1[32]
+--operation mode is bidir
+
+GPIO_1[32] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[33] is GPIO_1[33]
+--operation mode is bidir
+
+GPIO_1[33] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[34] is GPIO_1[34]
+--operation mode is bidir
+
+GPIO_1[34] = BIDIR(OPNDRN(VCC));
+
+
+--GPIO_1[35] is GPIO_1[35]
+--operation mode is bidir
+
+GPIO_1[35] = BIDIR(OPNDRN(VCC));
+
+
